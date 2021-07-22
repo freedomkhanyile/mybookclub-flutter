@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_book_club/screens/login/localwidgets/loginForm.dart';
 
 class OurLogin extends StatelessWidget {
   @override
@@ -15,6 +16,8 @@ class OurLogin extends StatelessWidget {
                 padding: EdgeInsets.all(32),
                 child: Image.asset("assets/logo.jpg"),
               ),
+              SizedBox(height:20.0,),
+              OurLoginForm()
             ],
           ))
         ],

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_book_club/screens/signup/signup.dart';
-
-class OurLoginForm extends StatelessWidget {
+import 'package:my_book_club/screens/login/login.dart';
+ 
+class OurSignUpForm extends StatelessWidget {
   SizedBox _sizedBox = SizedBox(height: 20.0);
 
   @override
@@ -15,7 +15,7 @@ class OurLoginForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "Log in",
+                "Sign up",
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
                   fontSize: 25.0,
@@ -25,6 +25,13 @@ class OurLoginForm extends StatelessWidget {
             ],
           ),
         ),
+        TextFormField(
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.person_outline),
+            hintText: "Full name",
+          ),
+        ),
+        _sizedBox,
         TextFormField(
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.alternate_email),
@@ -40,11 +47,19 @@ class OurLoginForm extends StatelessWidget {
           obscureText: true,
         ),
         _sizedBox,
+        TextFormField(
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.lock_open),
+            hintText: "Confirm Password",
+          ),
+          obscureText: true,
+        ),
+        _sizedBox,
         RaisedButton(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 100),
             child: Text(
-              "Log in",
+              "Sign up",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -55,11 +70,11 @@ class OurLoginForm extends StatelessWidget {
           onPressed: () {},
         ),
         FlatButton(
-          child: Text("Don't have an account? Sign up here"),
+          child: Text("Don't have an account? Log in"),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => OurSignUp(),
+                builder: (context) => OurLogin(),
               ),
             );
           },
