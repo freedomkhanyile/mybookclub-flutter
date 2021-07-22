@@ -6,7 +6,7 @@ class OurTheme {
   Color _black = HexColor("#000000");
   Color _lightGreen = HexColor("#83BF4F");
   Color _darkGreen = HexColor("#699635");
- 
+  double _borderRadius = 6.0;
   ThemeData buildTheme() {
     return ThemeData(
       canvasColor: _cloud,
@@ -15,13 +15,13 @@ class OurTheme {
       secondaryHeaderColor: _grey, 
       hintColor: _grey,
       inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(_borderRadius),
         borderSide: BorderSide(
           color: _grey
         )
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(_borderRadius),
         borderSide: BorderSide(
           color: _lightGreen
         )
@@ -30,9 +30,9 @@ class OurTheme {
          buttonColor: _lightGreen,
          padding: EdgeInsets.symmetric(horizontal: 20.0),
          minWidth: 400,
-         height: 40,
+         height: 60,
          shape: RoundedRectangleBorder(
-           borderRadius: BorderRadius.circular(20.0),),
+           borderRadius: BorderRadius.circular(_borderRadius),),
       )
     );
   }

@@ -11,7 +11,7 @@ class OurContainer extends StatelessWidget {
       padding: EdgeInsets.all(20.0),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(6.0),
           boxShadow: [
             BoxShadow(
                 color: Colors.grey,
