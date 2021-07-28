@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class CurrentUser extends ChangeNotifier {
   String? _uid;
@@ -45,7 +46,38 @@ class CurrentUser extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         retVal = "This account does not exist!";
-      }  
+      }
+    } catch (e) {
+      retVal = "Something went wrong, contact sys admin!";
+      print(e);
+    }
+    return retVal;
+  }
+
+  Future<String> loginUserWithGoogle() async {
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    );
+    String retVal = "error";
+    try {
+      GoogleSignInAccount _googleUser = await _googleSignIn.signIn(); // signs user to the google account
+
+      // creates a firebase Google account.
+      GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
+
+      UserCredential _result = await _auth.signInWithCredential(credential);      
+      _uid = _result.user!.uid;
+      _email = _result.user!.email;
+      retVal = "success";
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        retVal = "This account does not exist!";
+      }
     } catch (e) {
       retVal = "Something went wrong, contact sys admin!";
       print(e);

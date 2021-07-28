@@ -1,7 +1,7 @@
 {
   "project_info": {
     "project_number": "841982960258",
-    "firebase_url":"https://mybookclub-11b81-default-rtdb.firebaseio.com",
+    "firebase_url": "https://mybookclub-11b81-default-rtdb.firebaseio.com",
     "project_id": "mybookclub-11b81",
     "storage_bucket": "mybookclub-11b81.appspot.com"
   },
@@ -14,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "841982960258-rduu5p6ji5fvvkk25t5h5a1kbk6m84o0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutter.my_book_club",
+            "certificate_hash": "c4a732a0c9e9caeb4b67bb46fe1e38b1351b95bf"
+          }
+        },
         {
           "client_id": "841982960258-p7d3s47ldbd9qgp5iltjc4drdq4n65j9.apps.googleusercontent.com",
           "client_type": 3

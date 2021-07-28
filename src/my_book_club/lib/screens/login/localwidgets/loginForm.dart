@@ -5,6 +5,8 @@ import 'package:my_book_club/screens/signup/signup.dart';
 import 'package:my_book_club/states/currentUser.dart';
 import 'package:provider/provider.dart';
 
+enum LoginType { email, google }
+
 class OurLoginForm extends StatefulWidget {
   @override
   _OurLoginFormState createState() => _OurLoginFormState();
@@ -15,10 +17,27 @@ class _OurLoginFormState extends State<OurLoginForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  void _loginUser(String email, String password, BuildContext context) async {
-    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+  void _loginUser(
+      {required LoginType type,
+      String? email,
+      String? password,
+      BuildContext? context}) async {
+    CurrentUser _currentUser =
+        Provider.of<CurrentUser>(context!, listen: false);
+
+    String _returnString = "error";
+    
     try {
-      String _returnString = await _currentUser.loginUserWithEmail(email, password);
+      switch (type) {
+        case LoginType.email:
+          _returnString =
+              await _currentUser.loginUserWithEmail(email!, password!);
+          break;
+        case LoginType.google:
+        _returnString = await _currentUser.loginUserWithGoogle();
+          break;
+        default:
+      }
 
       if (_returnString == "success") {
         Navigator.of(context)
@@ -32,6 +51,36 @@ class _OurLoginFormState extends State<OurLoginForm> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Widget _googleButton() {
+    return OutlineButton(
+      splashColor: Colors.grey,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.grey),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(image: AssetImage("assets/google_icon.png"), height: 25.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                "Sign in with Google",
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+            )
+          ],
+        ),
+      ),
+      // try to put logic at the end of the button less clutter.
+      onPressed: () {
+        _loginUser(type: LoginType.google, context: context);
+      },
+    );
   }
 
   @override
@@ -85,7 +134,10 @@ class _OurLoginFormState extends State<OurLoginForm> {
           ),
           onPressed: () {
             _loginUser(
-                _emailController.text, _passwordController.text, context);
+                type: LoginType.email,
+                email: _emailController.text,
+                password: _passwordController.text,
+                context: context);
           },
         ),
         FlatButton(
@@ -97,7 +149,8 @@ class _OurLoginFormState extends State<OurLoginForm> {
               ),
             );
           },
-        )
+        ),
+        _googleButton()
       ]),
     );
   }
