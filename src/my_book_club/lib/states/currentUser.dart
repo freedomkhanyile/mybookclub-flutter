@@ -1,16 +1,40 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_book_club/models/user.dart';
 
 class CurrentUser extends ChangeNotifier {
-  String? _uid;
-  String? _email;
+   UserModel _currentUser = UserModel();
 
-  String? get getUid => _uid;
-
-  String? get getEmail => _email;
+  UserModel get getCurrentUser => _currentUser;
 
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<String> onStartUp() async {
+    String retVal = "error";
+    try {
+      User firebaseUser = await _auth.currentUser;
+      _currentUser.uid = firebaseUser.uid;
+      _currentUser.email = firebaseUser.email;
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
+    return retVal;
+  }
+
+  Future<String> signOut() async {
+    String retVal = "error";
+    try {
+      await _auth.signOut();
+      _currentUser = UserModel();
+
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
+    return retVal;
+  }
 
   Future<String> signUpUser(String email, String password) async {
     String retVal =
@@ -40,8 +64,8 @@ class CurrentUser extends ChangeNotifier {
     try {
       UserCredential _result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      _uid = _result.user!.uid;
-      _email = _result.user!.email;
+      _currentUser.uid = _result.user!.uid;
+      _currentUser.email = _result.user!.email;
       retVal = "success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -63,16 +87,17 @@ class CurrentUser extends ChangeNotifier {
     );
     String retVal = "error";
     try {
-      GoogleSignInAccount _googleUser = await _googleSignIn.signIn(); // signs user to the google account
+      GoogleSignInAccount _googleUser =
+          await _googleSignIn.signIn(); // signs user to the google account
 
       // creates a firebase Google account.
       GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
           idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
 
-      UserCredential _result = await _auth.signInWithCredential(credential);      
-      _uid = _result.user!.uid;
-      _email = _result.user!.email;
+      UserCredential _result = await _auth.signInWithCredential(credential);
+      _currentUser.uid = _result.user!.uid;
+      _currentUser.email = _result.user!.email;
       retVal = "success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

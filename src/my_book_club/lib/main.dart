@@ -2,7 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_book_club/screens/login/login.dart';
+import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/states/currentUser.dart';
 import 'package:my_book_club/utils/ourTheme.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +53,7 @@ class MyAwesomeApp extends StatelessWidget {
       child: MaterialApp(
         theme: OurTheme().buildTheme(),
         debugShowCheckedModeBanner: false,
-        home: OurLogin(),
+        home: OurRoot(),
       ),
     );
   }

@@ -26,7 +26,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
         Provider.of<CurrentUser>(context!, listen: false);
 
     String _returnString = "error";
-    
+
     try {
       switch (type) {
         case LoginType.email:
@@ -34,14 +34,16 @@ class _OurLoginFormState extends State<OurLoginForm> {
               await _currentUser.loginUserWithEmail(email!, password!);
           break;
         case LoginType.google:
-        _returnString = await _currentUser.loginUserWithGoogle();
+          _returnString = await _currentUser.loginUserWithGoogle();
           break;
         default:
       }
 
       if (_returnString == "success") {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+            (route) => false);
       } else {
         Scaffold.of(context).showSnackBar(SnackBar(
           content: Text(_returnString),
