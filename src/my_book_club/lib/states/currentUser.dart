@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_book_club/models/user.dart';
+import 'package:my_book_club/services/userService.dart';
 
 class CurrentUser extends ChangeNotifier {
-   UserModel _currentUser = UserModel();
+  UserModel _currentUser = UserModel();
 
   UserModel get getCurrentUser => _currentUser;
 
@@ -13,10 +14,12 @@ class CurrentUser extends ChangeNotifier {
   Future<String> onStartUp() async {
     String retVal = "error";
     try {
-      User firebaseUser = await _auth.currentUser;
-      _currentUser.uid = firebaseUser.uid;
-      _currentUser.email = firebaseUser.email;
-      retVal = "success";
+      User? firebaseUser = await _auth.currentUser;
+     _currentUser = await UserService().getUser(firebaseUser!.uid);
+     // check if user state is not null;
+     if(_currentUser.email != null) {
+       retVal = "success";
+     }
     } catch (e) {
       print(e);
     }
@@ -36,13 +39,25 @@ class CurrentUser extends ChangeNotifier {
     return retVal;
   }
 
-  Future<String> signUpUser(String email, String password) async {
+  Future<String> signUpUser(
+      String fullName, String email, String password) async {
     String retVal =
         "error"; // by defaulting this to a negative we can test effectively.
+
+    UserModel _user = UserModel();
+
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential _authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      retVal = "success";
+
+      _user.uid = _authResult.user!.uid;
+      _user.email = _authResult.user!.email;
+      _user.fullName = fullName;
+
+      String _returnString = await UserService().createUser(_user);
+      if (_returnString == "success") {
+        retVal = "success";
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         retVal = "password is too weak";
@@ -51,7 +66,7 @@ class CurrentUser extends ChangeNotifier {
       } else if (e.code == 'invalid-email') {
         retVal = "email is badly formated";
       } else {
-        retVal = e.message;
+        retVal = e.message!;
       }
     } catch (e) {
       print(e);
@@ -64,9 +79,11 @@ class CurrentUser extends ChangeNotifier {
     try {
       UserCredential _result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      _currentUser.uid = _result.user!.uid;
-      _currentUser.email = _result.user!.email;
-      retVal = "success";
+     _currentUser = await UserService().getUser(_result.user!.uid);
+     // check if user state is not null;
+     if(_currentUser.email != null) {
+       retVal = "success";
+     }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         retVal = "This account does not exist!";
@@ -86,19 +103,31 @@ class CurrentUser extends ChangeNotifier {
       ],
     );
     String retVal = "error";
+    UserModel _user = UserModel();
     try {
-      GoogleSignInAccount _googleUser =
+      GoogleSignInAccount? _googleUser =
           await _googleSignIn.signIn(); // signs user to the google account
 
       // creates a firebase Google account.
-      GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
+      GoogleSignInAuthentication _googleAuth =
+          await _googleUser!.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
           idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
 
       UserCredential _result = await _auth.signInWithCredential(credential);
-      _currentUser.uid = _result.user!.uid;
-      _currentUser.email = _result.user!.email;
-      retVal = "success";
+
+      if (_result.additionalUserInfo!.isNewUser) {
+        _user.uid = _result.user!.uid;
+        _user.email = _result.user!.email;
+        _user.fullName = _result.user!.displayName;
+        UserService().createUser(_user);
+      }
+     _currentUser = await UserService().getUser(_result.user!.uid);
+
+     // check if user state is not null;
+     if(_currentUser.email != null) {
+       retVal = "success";
+     }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         retVal = "This account does not exist!";
