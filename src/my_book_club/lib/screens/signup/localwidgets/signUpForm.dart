@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_book_club/screens/login/login.dart';
 import 'package:my_book_club/states/currentUser.dart';
 import 'package:provider/provider.dart';
- 
+
 class OurSignUpForm extends StatefulWidget {
   @override
   _OurSignUpFormState createState() => _OurSignUpFormState();
@@ -15,13 +15,19 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
- 
-  void _signUpUser(String email, String password, BuildContext context) async{
+
+  void _signUpUser(String email, String password, BuildContext context) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
     try {
-      if(await _currentUser.signUpUser(email, password)){
+      String _returnString = await _currentUser.signUpUser(email, password);
+      if (_returnString == "success") {
         Navigator.pop(context);
+      } else {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(_returnString),
+          duration: Duration(seconds: 2),
+        ));
       }
     } catch (e) {
       print(e);
@@ -95,14 +101,14 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
             ),
           ),
           onPressed: () {
-            if(_passwordController.text == _confirmPasswordController.text) {
-              _signUpUser(_emailController.text, _passwordController.text, context);
+            if (_passwordController.text == _confirmPasswordController.text) {
+              _signUpUser(
+                  _emailController.text, _passwordController.text, context);
             } else {
-              Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text("Passwords do not match"),
+              Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text("Passwords do not match"),
                 duration: Duration(seconds: 2),
-                )
-              );
+              ));
             }
           },
         ),
@@ -120,5 +126,3 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
     );
   }
 }
-
-
