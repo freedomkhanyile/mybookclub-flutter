@@ -30,6 +30,7 @@ class UserService {
         _user.fullName = value.data()!["fullName"];
         _user.email = value.data()!["email"];
         _user.accountCreated = value.data()!["accountCreated"];
+        _user.groupId = value.data()!["groupId"];
       }); 
     } catch (e) {
       print(e);

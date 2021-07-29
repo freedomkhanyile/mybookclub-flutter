@@ -5,7 +5,12 @@ class UserModel {
   String? email;
   String? fullName;
   Timestamp? accountCreated;
+  String? groupId;
 
 // Create a constructor oop.
-  UserModel({this.uid, this.email, this.fullName, this.accountCreated});
+  UserModel({this.uid, 
+      this.email, 
+      this.fullName, 
+      this.accountCreated, 
+      this.groupId});
 }
