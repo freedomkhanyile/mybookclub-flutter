@@ -29,7 +29,7 @@ class OurTheme {
       buttonTheme: ButtonThemeData(
          buttonColor: _lightGreen,
          padding: EdgeInsets.symmetric(horizontal: 20.0),
-         minWidth: 400,
+         minWidth: 150,
          height: 60,
          shape: RoundedRectangleBorder(
            borderRadius: BorderRadius.circular(_borderRadius),),
