@@ -25,14 +25,14 @@ class UserService {
     UserModel _user = UserModel();
 
     try {
-      var _docSnapShot = await _firestore.collection("users").doc(uid).get();
-      _user.uid = uid;
-      Map<String, dynamic>? data = _docSnapShot.data as Map<String, dynamic>?;
-      _user.email = data!["email"];
-      _user.fullName = data["fullName"];
-      _user.accountCreated = data["accountCreated"];
-     } catch (e) {
-    print(e);
+      await _firestore.collection("users").doc(uid).get().then((value) {
+        _user.uid = uid;
+        _user.fullName = value.data()!["fullName"];
+        _user.email = value.data()!["email"];
+        _user.accountCreated = value.data()!["accountCreated"];
+      }); 
+    } catch (e) {
+      print(e);
     }
 
     return _user;
