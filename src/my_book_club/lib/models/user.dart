@@ -7,7 +7,7 @@ class UserModel {
   Timestamp? accountCreated;
   String? groupId;
 
-// Create a constructor oop.
+// Constructor.
   UserModel({this.uid, 
       this.email, 
       this.fullName, 
