@@ -4,18 +4,19 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:my_book_club/models/book.dart';
 import 'package:my_book_club/screens/root/root.dart';
+import 'package:my_book_club/services/bookService.dart';
 import 'package:my_book_club/services/groupService.dart';
 import 'package:my_book_club/states/currentUser.dart';
 import 'package:my_book_club/widgets/ourContainer.dart';
 import 'package:provider/provider.dart';
 
 class AddBook extends StatefulWidget {
-  final bool onGroupCreation;
-  final String groupName;
+  final bool? onGroupCreation;
+  final String? groupName;
 
   AddBook({
-    required this.onGroupCreation,
-    required this.groupName,
+    this.onGroupCreation,
+    this.groupName,
   });
 
   @override
@@ -40,12 +41,18 @@ class _AddBookState extends State<AddBook> {
     }
   }
 
-  void _createGroup(
-      BuildContext context, String groupName, BookModel book) async {
+  void _addBook(BuildContext context, String? groupName, BookModel book) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
 
-    String _retVal = await GroupService()
-        .createGroup(groupName, _currentUser.getCurrentUser.uid!, book);
+    String _retVal;
+    if (widget.onGroupCreation!) {
+      _retVal = await GroupService()
+          .createGroup(groupName!, _currentUser.getCurrentUser.uid!, book);
+    } else {
+      _retVal = await BookService()
+          .addBook(_currentUser.getCurrentUser.groupId!, book);
+    }
+
 
     if (_retVal == "success") {
       Navigator.pushAndRemoveUntil(
@@ -130,7 +137,7 @@ class _AddBookState extends State<AddBook> {
                       book.author = _authorController.text;
                       book.length = int.parse(_lengthController.text);
                       book.completedDate = Timestamp.fromDate(selectedDate);
-                      _createGroup(context, widget.groupName, book);
+                      _addBook(context, widget.groupName, book);
                     },
                   ),
                 ],

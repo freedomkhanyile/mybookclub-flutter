@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_book_club/screens/book/addBook/addBook.dart';
 import 'package:my_book_club/screens/noGroup/noGroup.dart';
 import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/states/currentGroup.dart';
@@ -24,11 +25,13 @@ class _HomeScreenState extends State<HomeScreen> {
     _currentGroup.updateStateFromDatabase(_currentUser.getCurrentUser.groupId!);
   }
 
-  void _goToNoGroup(BuildContext context) async {
+  void _goToAddBook(BuildContext context) async {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => OurNoGroup(),
+        builder: (context) => AddBook(
+          onGroupCreation: false,
+        ),
       ),
     );
   }
@@ -114,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   "Book club history",
                   style: TextStyle(color: Colors.white),
                 ),
-                onPressed: () => _goToNoGroup(context)),
+                onPressed: () => _goToAddBook(context)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
