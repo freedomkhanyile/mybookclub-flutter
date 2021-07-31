@@ -2,7 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_book_club/models/group.dart';
 
 class GroupService {
+  
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<GroupModel> getGroup(String groupId) async {
+    GroupModel _group = GroupModel();
+
+    try {
+      await _firestore.collection("groups").doc(groupId).get().then((value) {
+        _group.id = groupId;
+        _group.name = value.data()!["name"];
+        _group.leader = value.data()!["leader"];
+        _group.members = List<String>.from(value.data()!["members"]); // converts a dynamic list to a string array.
+        _group.groupCreated = value.data()!["groupCreated"];
+        _group.currentBookId = value.data()!["currentBookId"];
+        _group.currentBookDue = value.data()!["currentBookDue"];
+      });
+    } catch (e) {
+      print(e);
+    }
+    return _group;
+  }
 
   Future<String> createGroup(String groupName, String createUserId) async {
     String retVal = "error";

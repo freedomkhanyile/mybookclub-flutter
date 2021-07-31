@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_book_club/screens/root/root.dart';
-import 'package:my_book_club/services/GroupService.dart';
+import 'package:my_book_club/services/groupService.dart';
 import 'package:my_book_club/states/currentUser.dart';
 import 'package:my_book_club/widgets/ourContainer.dart';
 import 'package:provider/provider.dart';

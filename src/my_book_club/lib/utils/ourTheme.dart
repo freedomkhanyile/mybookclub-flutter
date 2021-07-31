@@ -30,7 +30,7 @@ class OurTheme {
          buttonColor: _lightGreen,
          padding: EdgeInsets.symmetric(horizontal: 20.0),
          minWidth: 150,
-         height: 60,
+         height: 50,
          shape: RoundedRectangleBorder(
            borderRadius: BorderRadius.circular(_borderRadius),),
       )

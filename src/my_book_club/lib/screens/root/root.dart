@@ -3,6 +3,7 @@ import 'package:my_book_club/screens/home/home.dart';
 import 'package:my_book_club/screens/login/login.dart';
 import 'package:my_book_club/screens/noGroup/noGroup.dart';
 import 'package:my_book_club/screens/splashScreen/splashScreen.dart';
+import 'package:my_book_club/states/currentGroup.dart';
 import 'package:my_book_club/states/currentUser.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,7 @@ class _OurRootState extends State<OurRoot> {
         });
       }
     } else {
-       setState(() {
+      setState(() {
         _authStatus = AuthState.notLoggedIn;
       });
     }
@@ -56,7 +57,10 @@ class _OurRootState extends State<OurRoot> {
         retWidgetVal = OurNoGroup();
         break;
       case AuthState.inGroup:
-        retWidgetVal = HomeScreen();
+        retWidgetVal = ChangeNotifierProvider(
+          create: (context) => CurrentGroup(), // only provide the group state to the home screen.
+          child: HomeScreen(),
+        );
         break;
       default:
     }
