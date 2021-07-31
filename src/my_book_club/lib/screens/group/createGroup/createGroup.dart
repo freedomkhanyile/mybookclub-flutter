@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_book_club/screens/book/addBook/addBook.dart';
 import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/services/groupService.dart';
 import 'package:my_book_club/states/currentUser.dart';
@@ -13,21 +14,17 @@ class CreateGroup extends StatefulWidget {
 class _CreateGroupState extends State<CreateGroup> {
   TextEditingController _groupNameController = TextEditingController();
 
-
-  void _createGroup(BuildContext context, String groupName) async {
-    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
-
-    String _retVal = await GroupService()
-        .createGroup(groupName, _currentUser.getCurrentUser.uid!);
-
-    if (_retVal == "success") {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OurRoot(),
+  void _goToAddBook(BuildContext context, String groupName) async { 
+   
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddBook(
+            onGroupCreation: true,
+            groupName: groupName,
           ),
-          (route) => false);
-    }
+        ),
+      ); 
   }
 
   @override
@@ -59,9 +56,9 @@ class _CreateGroupState extends State<CreateGroup> {
                   ),
                   RaisedButton(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 70),
+                      padding: EdgeInsets.symmetric(horizontal: 90),
                       child: Text(
-                        "Create Group",
+                        "Add book",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -70,7 +67,7 @@ class _CreateGroupState extends State<CreateGroup> {
                       ),
                     ),
                     onPressed: () =>
-                        _createGroup(context, _groupNameController.text),
+                        _goToAddBook(context, _groupNameController.text),
                   ),
                 ],
               ),

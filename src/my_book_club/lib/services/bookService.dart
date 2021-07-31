@@ -17,6 +17,7 @@ class BookService {
           .then((value) {
         _book.id = bookId;
         _book.name = value.data()!["name"];
+        _book.author = value.data()!["author"];
         _book.length = value.data()!["length"];
         _book.completedDate = value.data()!["completedDate"];
       });
@@ -24,5 +25,32 @@ class BookService {
       print(e);
     }
     return _book;
+  }
+
+  Future<String> addBook(String groupId, BookModel model) async {
+    String retVal = "error";
+
+    try {
+     DocumentReference _docRef = await _firestore.collection("groups").doc(groupId)
+      .collection("books")
+      .add({
+        'name': model.name,
+        'author': model.author,
+        'length': model.length,
+        'completedDate': model.completedDate
+      });
+
+      // add current book to group schedule.
+      await _firestore.collection("groups").doc(groupId).update({
+        "currentBookId": _docRef.id,
+        "currentBookDue": model.completedDate
+      });
+
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
+
+    return retVal;
   }
 }

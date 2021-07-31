@@ -33,6 +33,8 @@ dependencies:
   firebase_core: 1.4.0
   firebase_auth: 3.0.1
   cloud_firestore: 2.4.0
+  flutter_datetime_picker:
+  intl:
   
 dev_dependencies:
   flutter_test:
