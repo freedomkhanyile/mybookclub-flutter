@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_book_club/screens/root/root.dart';
+import 'package:my_book_club/services/GroupService.dart';
+import 'package:my_book_club/states/currentUser.dart';
 import 'package:my_book_club/widgets/ourContainer.dart';
+import 'package:provider/provider.dart';
 
 class CreateGroup extends StatefulWidget {
   @override
@@ -8,6 +12,24 @@ class CreateGroup extends StatefulWidget {
 
 class _CreateGroupState extends State<CreateGroup> {
   TextEditingController _groupNameController = TextEditingController();
+
+
+  void _createGroup(BuildContext context, String groupName) async {
+    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+
+    String _retVal = await GroupService()
+        .createGroup(groupName, _currentUser.getCurrentUser.uid!);
+
+    if (_retVal == "success") {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OurRoot(),
+          ),
+          (route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +69,8 @@ class _CreateGroupState extends State<CreateGroup> {
                         ),
                       ),
                     ),
-                    onPressed: () => {},
+                    onPressed: () =>
+                        _createGroup(context, _groupNameController.text),
                   ),
                 ],
               ),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_book_club/screens/root/root.dart';
+import 'package:my_book_club/services/GroupService.dart';
+import 'package:my_book_club/states/currentUser.dart';
 import 'package:my_book_club/widgets/ourContainer.dart';
+import 'package:provider/provider.dart';
 
 class JoinGroup extends StatefulWidget {
   @override
@@ -10,6 +14,22 @@ class _JoinGroupState extends State<JoinGroup> {
   
 
   TextEditingController _groupIdController = TextEditingController();
+
+  void _joinGroup(BuildContext context, String groupId) async {
+    CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
+
+    String _retVal = await GroupService()
+        .joinGroup(groupId, _currentUser.getCurrentUser.uid!);
+
+    if (_retVal == "success") {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OurRoot(),
+          ),
+          (route) => false);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +69,7 @@ class _JoinGroupState extends State<JoinGroup> {
                         ),
                       ),
                     ),
-                    onPressed: () => {},
+                    onPressed: () => _joinGroup(context, _groupIdController.text),
                   ),
                 ],
               ),

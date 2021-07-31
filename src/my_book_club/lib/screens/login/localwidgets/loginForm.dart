@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_book_club/screens/home/home.dart';
+import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/screens/signup/signup.dart';
 import 'package:my_book_club/states/currentUser.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +42,7 @@ class _OurLoginFormState extends State<OurLoginForm> {
       if (_returnString == "success") {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => OurRoot()),
             (route) => false);
       } else {
         Scaffold.of(context).showSnackBar(SnackBar(
