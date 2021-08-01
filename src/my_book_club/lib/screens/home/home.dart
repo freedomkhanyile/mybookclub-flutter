@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:my_book_club/screens/book/addBook/addBook.dart';
 import 'package:my_book_club/screens/noGroup/noGroup.dart';
 import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/states/currentGroup.dart';
 import 'package:my_book_club/states/currentUser.dart';
+import 'package:my_book_club/utils/timeLeft.dart';
 import 'package:my_book_club/widgets/ourContainer.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +16,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //  [0] Time until picked book is due
+  //  [1] Time until next book reveal is posted.
+  List<String> _timeUntil = List.filled(2,"", growable: false);
+
+  late Timer _timer;
+
   @override
   void initState() {
     super.initState();
@@ -23,6 +32,23 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<CurrentGroup>(context, listen: false);
 
     _currentGroup.updateStateFromDatabase(_currentUser.getCurrentUser.groupId!);
+
+    _startTimer(_currentGroup);
+  }
+
+  void _startTimer(CurrentGroup currentGroup) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _timeUntil = OurTimeLeft().timeLeft(currentGroup.getCurrentGroup.currentBookDue!.toDate());// function that we call;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _timer.cancel();
+    super.dispose();
   }
 
   void _goToAddBook(BuildContext context) async {
@@ -59,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: OurContainer(child: Consumer<CurrentGroup>(
               builder: (BuildContext context, value, Widget? child) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(value.getCurrentBook.name ?? "loading..",
                         style: TextStyle(
@@ -73,12 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Expanded(
-                              child: Text(
-                                  (value.getCurrentGroup.currentBookDue != null)
-                                      ? value.getCurrentGroup.currentBookDue!
-                                          .toDate()
-                                          .toString()
-                                      : "loading..",
+                              child: Text(_timeUntil[0] ?? "loading..",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
@@ -87,10 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    RaisedButton(
-                        child: Text("Finished book",
-                            style: TextStyle(color: Colors.white)),
-                        onPressed: () => {})
+                    SizedBox(
+                      width: double.infinity,
+                      height: 40,
+                      child: RaisedButton(
+                          child: Text("Finished book",
+                              style: TextStyle(color: Colors.white)),
+                          onPressed: () => {}),
+                    )
                   ],
                 );
               },
@@ -99,15 +125,18 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: OurContainer(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text("Next book revealed in:",
-                    style: TextStyle(fontSize: 16, color: Colors.grey)),
-                Text("22 Hours",
-                    style:
-                        TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
-              ],
+                child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Next book revealed in:",
+                      style: TextStyle(fontSize: 30, color: Colors.grey)),
+                  Text(_timeUntil[1] ?? "loading..",
+                      style:
+                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                ],
+              ),
             )),
           ),
           Padding(
