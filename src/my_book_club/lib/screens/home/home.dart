@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     CurrentGroup _currentGroup =
         Provider.of<CurrentGroup>(context, listen: false);
 
-    _currentGroup.updateStateFromDatabase(_currentUser.getCurrentUser.groupId!);
+    _currentGroup.updateStateFromDatabase(_currentUser.getCurrentUser.groupId!, _currentUser.getCurrentUser.uid!);
 
     _startTimer(_currentGroup);
   }
