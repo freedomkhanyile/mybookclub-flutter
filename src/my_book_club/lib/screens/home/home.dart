@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:my_book_club/screens/book/addBook/addBook.dart';
 import 'package:my_book_club/screens/noGroup/noGroup.dart';
+import 'package:my_book_club/screens/review/review.dart';
 import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/states/currentGroup.dart';
 import 'package:my_book_club/states/currentUser.dart';
@@ -18,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   //  [0] Time until picked book is due
   //  [1] Time until next book reveal is posted.
-  List<String> _timeUntil = List.filled(2,"", growable: false);
+  List<String> _timeUntil = List.filled(2, "", growable: false);
 
   late Timer _timer;
 
@@ -31,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
     CurrentGroup _currentGroup =
         Provider.of<CurrentGroup>(context, listen: false);
 
-    _currentGroup.updateStateFromDatabase(_currentUser.getCurrentUser.groupId!, _currentUser.getCurrentUser.uid!);
+    _currentGroup.updateStateFromDatabase(
+        _currentUser.getCurrentUser.groupId!, _currentUser.getCurrentUser.uid!);
 
     _startTimer(_currentGroup);
   }
@@ -39,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _startTimer(CurrentGroup currentGroup) {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        _timeUntil = OurTimeLeft().timeLeft(currentGroup.getCurrentGroup.currentBookDue!.toDate());// function that we call;
+        _timeUntil = OurTimeLeft().timeLeft(currentGroup
+            .getCurrentGroup.currentBookDue!
+            .toDate()); // function that we call;
       });
     });
   }
@@ -72,6 +76,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _goToReview() {
+    CurrentGroup _currentGroup =
+        Provider.of<CurrentGroup>(context, listen: false);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OurReview(
+          currentGroup: _currentGroup,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,12 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   TextStyle(fontSize: 20, color: Colors.grey)),
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
-                            child: Expanded(
-                              child: Text(_timeUntil[0] ?? "loading..",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                            ),
+                            child: Text(_timeUntil[0] ?? "loading..",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
@@ -113,10 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: double.infinity,
                       height: 40,
                       child: RaisedButton(
-                          child: Text("Finished book",
-                              style: TextStyle(color: Colors.white)),
-                          onPressed: () => {}),
-                    )
+                        child: Text("Finished book",
+                            style: TextStyle(color: Colors.white)),
+                        onPressed:
+                            value.getDoneWithCurrentBook ? null : _goToReview,
+                      ),
+                    ),
                   ],
                 );
               },

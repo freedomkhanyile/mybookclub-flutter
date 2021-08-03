@@ -90,29 +90,32 @@ class _OurSignUpFormState extends State<OurSignUpForm> {
           obscureText: true,
         ),
         _sizedBox,
-        RaisedButton(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 100),
-            child: Text(
-              "Sign up",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
+        SizedBox(
+          width: double.infinity,
+          child: RaisedButton(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100),
+              child: Text(
+                "Sign up",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
               ),
             ),
+            onPressed: () {
+              if (_passwordController.text == _confirmPasswordController.text) {
+                _signUpUser(_fullNameController.text, _emailController.text,
+                    _passwordController.text, context);
+              } else {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text("Passwords do not match"),
+                  duration: Duration(seconds: 2),
+                ));
+              }
+            },
           ),
-          onPressed: () {
-            if (_passwordController.text == _confirmPasswordController.text) {
-              _signUpUser(_fullNameController.text, _emailController.text,
-                  _passwordController.text, context);
-            } else {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text("Passwords do not match"),
-                duration: Duration(seconds: 2),
-              ));
-            }
-          },
         ),
         FlatButton(
           child: Text("Don't have an account? Log in"),

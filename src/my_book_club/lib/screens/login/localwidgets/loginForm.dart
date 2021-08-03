@@ -122,25 +122,28 @@ class _OurLoginFormState extends State<OurLoginForm> {
           obscureText: true,
         ),
         _sizedBox,
-        RaisedButton(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 100),
-            child: Text(
-              "Log in",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
+        SizedBox(
+          width: double.infinity,
+          child: RaisedButton(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100),
+              child: Text(
+                "Log in",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
               ),
             ),
+            onPressed: () {
+              _loginUser(
+                  type: LoginType.email,
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  context: context);
+            },
           ),
-          onPressed: () {
-            _loginUser(
-                type: LoginType.email,
-                email: _emailController.text,
-                password: _passwordController.text,
-                context: context);
-          },
         ),
         FlatButton(
           child: Text("Don't have an account? Sign up here"),
