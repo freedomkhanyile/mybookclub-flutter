@@ -1,11 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_book_club/models/authModel.dart';
-import 'package:my_book_club/screens/group/notInGroup/notInGroup.dart';
+import 'package:my_book_club/models/userModel.dart';
+import 'package:my_book_club/screens/group/inGroup/inGroupScreen.dart';
+import 'package:my_book_club/screens/group/notInGroup/noGroup.dart';
 import 'package:my_book_club/screens/login/login.dart';
 import 'package:my_book_club/screens/splashScreen/splashScreen.dart';
+import 'package:my_book_club/services/dbStream.dart';
 import 'package:provider/provider.dart';
 
-enum AuthState { unknown, notLoggedIn, notInGroup, inGroup }
+enum AuthState { unknown, notLoggedIn, loggedIn }
 
 class OurRoot extends StatefulWidget {
   @override
@@ -14,6 +18,7 @@ class OurRoot extends StatefulWidget {
 
 class _OurRootState extends State<OurRoot> {
   AuthState _authStatus = AuthState.unknown;
+  String currentUid = "";
   // everytime something changes in the dependencies of this screen this method
   @override
   void didChangeDependencies() async {
@@ -25,7 +30,8 @@ class _OurRootState extends State<OurRoot> {
     if (_authStreamState != null) {
       // check if the user is in a group.
       setState(() {
-        _authStatus = AuthState.notInGroup;
+        _authStatus = AuthState.loggedIn;
+        currentUid = _authStreamState.uid!;
       });
     } else {
       setState(() {
@@ -49,23 +55,37 @@ class _OurRootState extends State<OurRoot> {
       case AuthState.notLoggedIn:
         retWidgetVal = Login();
         break;
-      case AuthState.notInGroup:
-        // retWidgetVal = OurNoGroup();
-        retWidgetVal =  NotInGroupScreen();
-        break;
-      case AuthState.inGroup:
-        // retWidgetVal = ChangeNotifierProvider(
-        //   create: (context) =>
-        //       CurrentGroup(), // only provide the group state to the home screen.
-        //   child: HomeScreen(),
-        // );
-        retWidgetVal = Scaffold(
-          body: Center(
-            child: Text("In a group"),
-          ),
+      case AuthState.loggedIn:
+        retWidgetVal = StreamProvider<UserModel>.value(
+          value: DbStream().getCurrentUser(currentUid),
+          initialData: UserModel(),
+          child: LoggedIn(),
         );
         break;
+
       default:
+    }
+
+    return retWidgetVal;
+  }
+}
+
+class LoggedIn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Widget retWidgetVal;
+
+    UserModel _userStream = Provider.of<UserModel>(context);
+
+    // if in a group.
+    if (_userStream.email != null) {
+      if (_userStream.groupId != null) {
+        retWidgetVal = InGroupScreen();
+      } else {
+        retWidgetVal = NoGroupScreen();
+      }
+    }  else {
+      retWidgetVal = SplashScreen();
     }
 
     return retWidgetVal;

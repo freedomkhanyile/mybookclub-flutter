@@ -31,14 +31,13 @@ class AuthService {
     try {
       UserCredential _authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      if (_authResult != null) {
+ 
         // String _returnString = await UserService().createUser(_user);
         // if (_returnString == "success") {
         //   retVal = "success";
         // }
-      } else {
-        print("something went wrong! contact sys admin.");
-      }
+        retVal = "success";
+     
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         retVal = "password is too weak";
