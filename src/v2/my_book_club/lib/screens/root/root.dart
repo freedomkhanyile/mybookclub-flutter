@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_book_club/models/authModel.dart';
+import 'package:my_book_club/screens/group/notInGroup/notInGroup.dart';
+import 'package:my_book_club/screens/login/login.dart';
+import 'package:my_book_club/screens/splashScreen/splashScreen.dart';
 import 'package:provider/provider.dart';
 
 enum AuthState { unknown, notLoggedIn, notInGroup, inGroup }
@@ -41,27 +44,14 @@ class _OurRootState extends State<OurRoot> {
     switch (_authStatus) {
       case AuthState.unknown:
         // retWidgetVal = OurSplashScreen();
-        retWidgetVal = Scaffold(
-          body: Center(
-            child: Text("Unkown text"),
-          ),
-        );
+        retWidgetVal = SplashScreen();
         break;
       case AuthState.notLoggedIn:
-        // retWidgetVal = OurLogin();
-        retWidgetVal = Scaffold(
-          body: Center(
-            child: Text("Not logged in"),
-          ),
-        );
+        retWidgetVal = Login();
         break;
       case AuthState.notInGroup:
         // retWidgetVal = OurNoGroup();
-        retWidgetVal = Scaffold(
-          body: Center(
-            child: Text("Not in group"),
-          ),
-        );
+        retWidgetVal =  NotInGroupScreen();
         break;
       case AuthState.inGroup:
         // retWidgetVal = ChangeNotifierProvider(
