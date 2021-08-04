@@ -18,7 +18,7 @@ class UserModel {
 
   // Named constructor
 
-  UserModel.$FromDocumentSnapshot({required DocumentSnapshot doc}) {
+  UserModel.$fromDocumentSnapshot({required DocumentSnapshot doc}) {
     this.uid = doc.id;
     this.email = (doc.data() as Map<String, dynamic>)['email'];
     this.fullName = (doc.data() as Map<String, dynamic>)['fullName'];

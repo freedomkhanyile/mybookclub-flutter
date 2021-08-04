@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_book_club/models/authModel.dart';
+import 'package:my_book_club/models/groupModel.dart';
 import 'package:my_book_club/models/userModel.dart';
 import 'package:my_book_club/screens/group/inGroup/inGroupScreen.dart';
 import 'package:my_book_club/screens/group/notInGroup/noGroup.dart';
@@ -80,7 +81,10 @@ class LoggedIn extends StatelessWidget {
     // if in a group.
     if (_userStream.email != null) {
       if (_userStream.groupId != null) {
-        retWidgetVal = InGroupScreen();
+        retWidgetVal = StreamProvider<GroupModel>.value(
+          value: DbStream().getCurrentGroup(_userStream.groupId!),
+          initialData: GroupModel(),
+          child: InGroupScreen());
       } else {
         retWidgetVal = NoGroupScreen();
       }

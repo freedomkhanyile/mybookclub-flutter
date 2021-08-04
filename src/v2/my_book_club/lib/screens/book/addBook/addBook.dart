@@ -2,21 +2,23 @@ import 'package:cloud_firestore_platform_interface/src/timestamp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:my_book_club/models/authModel.dart';
 import 'package:my_book_club/models/bookModel.dart';
 import 'package:my_book_club/models/userModel.dart';
- import 'package:my_book_club/screens/root/root.dart';
+import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/services/bookService.dart';
 import 'package:my_book_club/services/groupService.dart';
 import 'package:my_book_club/widgets/shadowContainer.dart';
-  import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class AddBookScreen extends StatefulWidget {
   final bool? onGroupCreation;
   final String? groupName;
-
+  final UserModel? currentUser;
   AddBookScreen({
     this.onGroupCreation,
     this.groupName,
+    this.currentUser,
   });
 
   @override
@@ -42,17 +44,14 @@ class _AddBookState extends State<AddBookScreen> {
   }
 
   void _addBook(BuildContext context, String? groupName, BookModel book) async {
-     UserModel _currentUser = Provider.of<UserModel>(context, listen: false);
+    AuthModel _auth = Provider.of<AuthModel>(context, listen: false);
 
-    String _retVal;
+    String _retVal = "";
     if (widget.onGroupCreation!) {
-      _retVal = await GroupService()
-          .createGroup(groupName!, _currentUser.uid!, book);
+      _retVal = await GroupService().createGroup(groupName!, _auth.uid!, book);
     } else {
-      _retVal = await BookService()
-          .addBook(_currentUser.groupId!, book);
+      _retVal = await BookService().addBook(widget.currentUser!.groupId!, book);
     }
-
 
     if (_retVal == "success") {
       Navigator.pushAndRemoveUntil(

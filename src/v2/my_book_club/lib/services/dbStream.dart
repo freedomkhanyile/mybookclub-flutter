@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_book_club/models/groupModel.dart';
 import 'package:my_book_club/models/userModel.dart';
 
 class DbStream {
@@ -6,6 +7,11 @@ class DbStream {
 
   Stream<UserModel> getCurrentUser(String uid) {
     return _firestore.collection("users").doc(uid).snapshots().map(
-        (docSnapshot) => UserModel.$FromDocumentSnapshot(doc: docSnapshot));
+        (docSnapshot) => UserModel.$fromDocumentSnapshot(doc: docSnapshot));
+  }
+
+  Stream<GroupModel> getCurrentGroup(String groupId) {
+    return _firestore.collection("groups").doc(groupId).snapshots()
+    .map((docSnapshot) => GroupModel.$fromDocumentSnapshot(doc: docSnapshot));
   }
 }
