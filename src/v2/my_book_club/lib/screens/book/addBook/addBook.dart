@@ -15,10 +15,12 @@ class AddBookScreen extends StatefulWidget {
   final bool? onGroupCreation;
   final String? groupName;
   final UserModel? currentUser;
+   final bool? onError;
   AddBookScreen({
     this.onGroupCreation,
     this.groupName,
     this.currentUser,
+    this.onError
   });
 
   @override
@@ -48,7 +50,7 @@ class _AddBookState extends State<AddBookScreen> {
 
     String _retVal = "";
     if (widget.onGroupCreation!) {
-      _retVal = await GroupService().createGroup(groupName!, _auth.uid!, book);
+      _retVal = await GroupService().createGroup(groupName!, widget.currentUser!, book);
     } else {
       _retVal = await BookService().addBook(widget.currentUser!.groupId!, book);
     }

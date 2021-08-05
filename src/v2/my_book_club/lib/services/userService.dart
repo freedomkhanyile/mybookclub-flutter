@@ -10,7 +10,8 @@ class UserService {
       await _firestore.collection("users").doc(model.uid).set({
         'fullName': model.fullName,
         'email': model.email,
-        'accountCreated': Timestamp.now()
+        'accountCreated': Timestamp.now(),
+         'notifToken': model.notifToken,
       });
 
       retVal = "success";

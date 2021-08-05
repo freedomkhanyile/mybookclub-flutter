@@ -14,4 +14,15 @@ class BookModel {
     this.length,
     this.completedDate,
   });
+
+  BookModel.$fromDocumentSnapshot({required DocumentSnapshot doc}) {
+    this.id = doc.id;
+    if (doc.data() != null) {
+      this.name = (doc.data() as Map<String, dynamic>)['name'];
+      this.author = (doc.data() as Map<String, dynamic>)['author'];
+      this.length = (doc.data() as Map<String, dynamic>)['length'];
+      this.completedDate = (doc.data() as Map<String, dynamic>)['completedDate'];      
+    }
+  }
+
 }

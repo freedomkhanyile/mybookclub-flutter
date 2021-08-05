@@ -77,9 +77,8 @@ class LoggedIn extends StatelessWidget {
     Widget retWidgetVal;
 
     UserModel _userStream = Provider.of<UserModel>(context);
-
     // if in a group.
-    if (_userStream.email != null) {
+    if (_userStream.email !=null) {
       if (_userStream.groupId != null) {
         retWidgetVal = StreamProvider<GroupModel>.value(
           value: DbStream().getCurrentGroup(_userStream.groupId!),

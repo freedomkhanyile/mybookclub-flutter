@@ -19,7 +19,7 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
      UserModel _currentUser = Provider.of<UserModel>(context, listen: false);
 
     String _retVal = await GroupService()
-        .joinGroup(groupId, _currentUser.uid!);
+        .joinGroup(groupId, _currentUser);
     if (_retVal == "success") {
       Navigator.pushAndRemoveUntil(
           context,

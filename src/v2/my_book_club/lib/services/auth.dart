@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:my_book_club/models/authModel.dart';
+import 'package:my_book_club/models/userModel.dart';
+import 'package:my_book_club/services/userService.dart';
 
 class AuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   Stream<AuthModel?> get user {
     return _auth.authStateChanges().map(
@@ -31,13 +36,22 @@ class AuthService {
     try {
       UserCredential _authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
- 
-        // String _returnString = await UserService().createUser(_user);
-        // if (_returnString == "success") {
-        //   retVal = "success";
-        // }
+
+      UserModel _user = UserModel(
+        uid: _authResult.user!.uid,
+        email: _authResult.user!.email,
+        fullName: fullName.trim(),
+        accountCreated: Timestamp.now(),
+        notifToken: await _fcm.getToken(),
+      );
+
+      String _returnString = await UserService().createUser(_user);
+
+      if (_returnString == "success") {
         retVal = "success";
-     
+      }
+
+      retVal = "success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         retVal = "password is too weak";
@@ -58,14 +72,9 @@ class AuthService {
     String retVal = "error invalid username/password";
     try {
       UserCredential _result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-
+          email: email.trim(), password: password);
       if (_result.user != null) {
-        // _currentUser = await UserService().getUser(_result.user!.uid);
-        // // check if user state is not null;
-        // if (_currentUser.email != null) {
-        //   retVal = "success";
-        // }
+        retVal = "success";
       } else {
         print("Something went wrong! contact sys admin");
       }
@@ -89,7 +98,7 @@ class AuthService {
     );
     String retVal = "error";
 
-     try {
+    try {
       GoogleSignInAccount? _googleUser =
           await _googleSignIn.signIn(); // signs user to the google account
 
@@ -100,14 +109,22 @@ class AuthService {
           idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
       UserCredential _result = await _auth.signInWithCredential(credential);
 
-      if (_result.additionalUserInfo!.isNewUser) { 
-        // UserService().createUser(_user);
+      if (_result.additionalUserInfo!.isNewUser) {
+        UserModel _user = UserModel(
+          uid: _result.user!.uid,
+          email: _result.user!.email,
+          fullName: _result.user!.displayName,
+          accountCreated: Timestamp.now(),
+          notifToken: await _fcm.getToken(),
+        );
+
+        String _returnString = await UserService().createUser(_user);
+
+        if (_returnString == "success") {
+          retVal = "success";
+        }
       }
-      // _currentUser = await UserService().getUser(_result.user!.uid);
-      // // check if user state is not null;
-      // if (_currentUser.email != null) {
-      //   retVal = "success";
-      // }
+      retVal = "success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         retVal = "This account does not exist!";

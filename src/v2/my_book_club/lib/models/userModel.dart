@@ -7,6 +7,7 @@ class UserModel {
   String? fullName;
   Timestamp? accountCreated;
   String? groupId;
+  String? notifToken;
   // Constructor.
   UserModel({
     this.uid,
@@ -14,6 +15,7 @@ class UserModel {
     this.fullName,
     this.accountCreated,
     this.groupId,
+    this.notifToken,
   });
 
   // Named constructor
@@ -22,7 +24,9 @@ class UserModel {
     this.uid = doc.id;
     this.email = (doc.data() as Map<String, dynamic>)['email'];
     this.fullName = (doc.data() as Map<String, dynamic>)['fullName'];
-    this.accountCreated = (doc.data() as Map<String, dynamic>)['accountCreated'];
+    this.accountCreated =
+        (doc.data() as Map<String, dynamic>)['accountCreated'];
     this.groupId = (doc.data() as Map<String, dynamic>)['groupId'];
+    this.notifToken = (doc.data() as Map<String, dynamic>)['notifToken'];
   }
 }

@@ -5,18 +5,27 @@ class GroupModel {
   String? name;
   String? leader;
   List<String>? members;
+  List<String>? tokens;
   Timestamp? groupCreated;
   String? currentBookId;
+  int? indexPickingBook;
+  String? nextBookId;
   Timestamp? currentBookDue;
-  // Constructor.
-  GroupModel(
-      {this.id,
-      this.name,
-      this.leader,
-      this.members,
-      this.groupCreated,
-      this.currentBookId,
-      this.currentBookDue});
+  Timestamp? nextBookDue;
+
+  GroupModel({
+    this.id,
+    this.name,
+    this.leader,
+    this.members,
+    this.tokens,
+    this.groupCreated,
+    this.currentBookId,
+    this.indexPickingBook,
+    this.nextBookId,
+    this.currentBookDue,
+    this.nextBookDue,
+  });
 
   GroupModel.$fromDocumentSnapshot({required DocumentSnapshot doc}) {
     this.id = doc.id;
@@ -28,8 +37,12 @@ class GroupModel {
       this.groupCreated = (doc.data() as Map<String, dynamic>)['groupCreated'];
       this.currentBookId =
           (doc.data() as Map<String, dynamic>)['currentBookId'];
+      this.indexPickingBook =
+          (doc.data() as Map<String, dynamic>)['indexPickingBook'];
+      this.nextBookId = (doc.data() as Map<String, dynamic>)['nextBookId'];
       this.currentBookDue =
           (doc.data() as Map<String, dynamic>)['currentBookDue'];
+      this.nextBookDue = (doc.data() as Map<String, dynamic>)['nextBookDue'];
     }
   }
 }

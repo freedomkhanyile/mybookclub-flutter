@@ -35,6 +35,8 @@ dependencies:
   cloud_firestore: 2.4.0
   flutter_datetime_picker:
   intl:
+  numberpicker:
+  firebase_messaging:
   
 dev_dependencies:
   flutter_test:

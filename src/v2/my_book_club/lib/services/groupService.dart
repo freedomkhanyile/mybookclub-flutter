@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_book_club/models/bookModel.dart';
 import 'package:my_book_club/models/groupModel.dart';
+import 'package:my_book_club/models/userModel.dart';
 import 'package:my_book_club/services/bookService.dart';
 
 class GroupService {
@@ -27,27 +28,46 @@ class GroupService {
   }
 
   Future<String> createGroup(
-      String groupName, String createUserId, BookModel initialBook) async {
+      String groupName, UserModel user, BookModel initialBook) async {
     String retVal = "error";
+
     List<String> members = [];
+    List<String> tokens = [];
 
     try {
-      members.add(createUserId);
-      DocumentReference _docRef = await _firestore.collection("groups").add({
-        'name': groupName,
-        'leader': createUserId,
-        'members': members,
-        'groupCreated': Timestamp.now()
-      });
+      members.add(user.uid!);
+      tokens.add(user.notifToken!);
+      DocumentReference _docRef;
+      if (user.notifToken != null) {
+        _docRef = await _firestore.collection("groups").add({
+          'name': groupName.trim(),
+          'leader': user.uid!,
+          'members': members,
+          'tokens': tokens,
+          'groupCreated': Timestamp.now(),
+          'nextBookId': "waiting",
+          'indexPickingBook': 0
+        });
+      } else {
+        _docRef = await _firestore.collection("groups").add({
+          'name': groupName.trim(),
+          'leader': user.uid!,
+          'members': members,
+          'groupCreated': Timestamp.now(),
+          'nextBookId': "waiting",
+          'indexPickingBook': 0
+        });
+      }
 
       // update the user's group Id
       await _firestore
           .collection("users")
-          .doc(createUserId)
+          .doc(user.uid!)
           .update({'groupId': _docRef.id});
 
       // add a book
       BookService().addBook(_docRef.id, initialBook);
+
       retVal = "success";
     } catch (e) {
       print(e);
@@ -56,21 +76,25 @@ class GroupService {
     return retVal;
   }
 
-  Future<String> joinGroup(String groupId, String userUid) async {
+  Future<String> joinGroup(String groupId, UserModel user) async {
     String retVal = "error";
     List<String> members = [];
+    List<String> tokens = [];
 
     try {
       // updates the existing members field with our userUid only one can exist by using arrayUnion()
-      members.add(userUid);
+      members.add(user.uid!);
+      tokens.add(user.notifToken!);
+
       await _firestore.collection("groups").doc(groupId).update({
         'members': FieldValue.arrayUnion(members),
+        'tokens': FieldValue.arrayUnion(tokens),
       });
 
       // update the users group Id
       await _firestore
           .collection("users")
-          .doc(userUid)
+          .doc(user.uid!)
           .update({'groupId': groupId});
 
       retVal = "success";
@@ -78,6 +102,33 @@ class GroupService {
       print(e);
     }
 
+    return retVal;
+  }
+
+  Future<String> leaveGroup(String groupId, UserModel userModel) async {
+    String retVal = "error";
+    List<String> members = [];
+    List<String> tokens = [];
+
+    try {
+      members.add(userModel.uid!);
+      tokens.add(userModel.notifToken!);
+
+      await _firestore.collection("groups").doc(groupId).update({
+        'members': FieldValue.arrayRemove(members),
+        'tokens': FieldValue.arrayRemove(tokens)
+      });
+
+      // remove group from user.
+      await _firestore
+          .collection("users")
+          .doc(userModel.uid)
+          .update({'groupId': null});
+
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
     return retVal;
   }
 }
