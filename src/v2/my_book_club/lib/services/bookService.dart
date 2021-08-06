@@ -15,11 +15,13 @@ class BookService {
           .doc(bookId)
           .get()
           .then((value) {
-        _book.id = bookId;
-        _book.name = value.data()!["name"];
-        _book.author = value.data()!["author"];
-        _book.length = value.data()!["length"];
-        _book.completedDate = value.data()!["completedDate"];
+        if (value.data() != null) {
+          _book.id = bookId;
+          _book.name = value.data()!["name"];
+          _book.author = value.data()!["author"];
+          _book.length = value.data()!["length"];
+          _book.completedDate = value.data()!["completedDate"];
+        }
       });
     } catch (e) {
       print(e);

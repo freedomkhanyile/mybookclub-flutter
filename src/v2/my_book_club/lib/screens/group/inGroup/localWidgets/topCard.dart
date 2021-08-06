@@ -31,8 +31,8 @@ class _TopCardState extends State<TopCard> {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (this.mounted) {
         setState(() {
-          // _timeUntil =
-          //     TimeLeft().timeLeft(_groupModel.currentBookDue!.toDate());
+          _timeUntil =
+              TimeLeft().timeLeft(_groupModel.currentBookDue!.toDate());
         });
       }
     });
@@ -131,19 +131,19 @@ class _TopCardState extends State<TopCard> {
     if (_currentBook.name == null) {
       return ShadowContainer(child: noNextBook());
     }
-    return Container(
+    return ShadowContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            _currentBook.name!,
+           (_currentBook.name != null) ? _currentBook.name! : 'loading..',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
-            _currentBook.author!,
+            (_currentBook.author! != null) ? _currentBook.author! : 'loading..',
             style: TextStyle(
               fontSize: 20,
               color: Colors.grey[600],
@@ -156,7 +156,7 @@ class _TopCardState extends State<TopCard> {
                 Text(
                   "Due In:",
                   style: TextStyle(
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                     color: Colors.grey[600],
                   ),
                 ),
@@ -164,7 +164,7 @@ class _TopCardState extends State<TopCard> {
                   child: Text(
                     _timeUntil,
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

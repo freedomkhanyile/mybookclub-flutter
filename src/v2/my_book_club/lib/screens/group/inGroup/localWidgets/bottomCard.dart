@@ -32,12 +32,21 @@ class _BottomCardState extends State<BottomCard> {
     if (_groupModel != null) {
       _pickingUser = await UserService()
           .getUser(_groupModel.members![_groupModel.indexPickingBook!]);
+        _nextBook = await BookService().getBook(_groupModel.id!, _groupModel.nextBookId!);
 
       setState(() {});
     }
   }
 
   void _goToAddBook(BuildContext context) {
+    int _nextIndex;
+    int _numMembers = _groupModel.members!.length;
+    if (_groupModel.indexPickingBook == (_numMembers - 1)) {
+      _nextIndex = 0; // restart the picking order we reached the end.
+    } else {
+      _nextIndex = _groupModel.indexPickingBook! + 1;
+    }
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -45,13 +54,14 @@ class _BottomCardState extends State<BottomCard> {
           onGroupCreation: false,
           onError: false,
           currentUser: _currentUser,
+          nextIndex: _nextIndex,
         ),
       ),
     );
   }
 
   Widget _displayText() {
-    late Widget retVal;
+    late Widget retVal = Text("");
     // ignore: unnecessary_null_comparison
     if (_pickingUser.uid != null) {
       if (_groupModel.nextBookId == "waiting") {
@@ -59,7 +69,9 @@ class _BottomCardState extends State<BottomCard> {
           // the current user must pick a book
           retVal = RaisedButton(
             child: Text("Select Next Book"),
-            onPressed: () {},
+            onPressed: () {
+              _goToAddBook(context);
+            },
           );
         } else {
           retVal = Text(
@@ -70,6 +82,36 @@ class _BottomCardState extends State<BottomCard> {
             ),
           );
         }
+      } else {
+         
+        retVal = Column(
+          children: [
+            Text(
+              "Next book is: ",
+              style: TextStyle(
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+             Text(
+           (_nextBook.name != null) ? _nextBook.name! : 'loading..',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            (_nextBook.author! != null) ? _nextBook.author! : 'loading..',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey[600],
+            ),
+          ),
+          ],
+        );
       }
     } else {
       retVal = Text(

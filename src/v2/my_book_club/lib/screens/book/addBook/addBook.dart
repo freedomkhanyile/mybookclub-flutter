@@ -15,12 +15,14 @@ class AddBookScreen extends StatefulWidget {
   final bool? onGroupCreation;
   final String? groupName;
   final UserModel? currentUser;
-   final bool? onError;
+  final bool? onError;
+  final int? nextIndex;
   AddBookScreen({
     this.onGroupCreation,
     this.groupName,
     this.currentUser,
-    this.onError
+    this.onError,
+    this.nextIndex,
   });
 
   @override
@@ -28,32 +30,48 @@ class AddBookScreen extends StatefulWidget {
 }
 
 class _AddBookState extends State<AddBookScreen> {
+  final addBookKey = GlobalKey<ScaffoldState>();
+
   TextEditingController _nameController = TextEditingController();
   TextEditingController _authorController = TextEditingController();
   TextEditingController _lengthController = TextEditingController();
 
-  DateTime selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
+
+  initState() {
+    super.initState();
+    _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
+        _selectedDate.day, _selectedDate.hour, 0, 0, 0, 0);
+  }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await DatePicker.showDateTimePicker(context,
-        showTitleActions: true); // using the datepicker plugin
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2222));
 
-    if (pickedDate != null && pickedDate != selectedDate) {
+    if (pickedDate != null && pickedDate != _selectedDate) {
       setState(() {
-        selectedDate = pickedDate;
+        _selectedDate = pickedDate;
       });
     }
   }
 
   void _addBook(BuildContext context, String? groupName, BookModel book) async {
-    AuthModel _auth = Provider.of<AuthModel>(context, listen: false);
-    UserModel user = Provider.of<UserModel>(context, listen: false);
+    // AuthModel _auth = Provider.of<AuthModel>(context, listen: false);
+    // UserModel user = Provider.of<UserModel>(context, listen: false);
 
     String _retVal = "";
+
     if (widget.onGroupCreation!) {
-      _retVal = await GroupService().createGroup(groupName!, widget.currentUser!, book);
-    } else {
+      _retVal = await GroupService()
+          .createGroup(groupName!, widget.currentUser!, book);
+    } else if (widget.onError!) {
       _retVal = await BookService().addBook(widget.currentUser!.groupId!, book);
+    } else {
+      _retVal = await BookService()
+          .addNextBook(widget.currentUser!.groupId!, book, widget.nextIndex!);
     }
 
     if (_retVal == "success") {
@@ -115,8 +133,8 @@ class _AddBookState extends State<AddBookScreen> {
                   ),
                   // datepicker (package)
 
-                  Text(DateFormat.yMMMMd("en_US").format(selectedDate)),
-                  Text(DateFormat("H:mm").format(selectedDate)),
+                  Text(DateFormat.yMMMMd("en_US").format(_selectedDate)),
+                  Text(DateFormat("H:mm").format(_selectedDate)),
                   FlatButton(
                     child: Text("Change Date"),
                     onPressed: () => _selectDate(context),
@@ -138,7 +156,7 @@ class _AddBookState extends State<AddBookScreen> {
                       book.name = _nameController.text;
                       book.author = _authorController.text;
                       book.length = int.parse(_lengthController.text);
-                      book.completedDate = Timestamp.fromDate(selectedDate);
+                      book.completedDate = Timestamp.fromDate(_selectedDate);
                       _addBook(context, widget.groupName, book);
                     },
                   ),

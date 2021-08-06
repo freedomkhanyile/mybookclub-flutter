@@ -8,6 +8,7 @@ class GroupModel {
   List<String>? tokens;
   Timestamp? groupCreated;
   String? currentBookId;
+  Timestamp? currentBookDue;
   int? indexPickingBook;
   String? nextBookId;
 
@@ -19,6 +20,7 @@ class GroupModel {
     this.tokens,
     this.groupCreated,
     this.currentBookId,
+    this.currentBookDue,
     this.indexPickingBook,
     this.nextBookId,
   });
@@ -33,6 +35,8 @@ class GroupModel {
       this.groupCreated = (doc.data() as Map<String, dynamic>)['groupCreated'];
       this.currentBookId =
           (doc.data() as Map<String, dynamic>)['currentBookId'];
+      this.currentBookDue =
+          (doc.data() as Map<String, dynamic>)['currentBookDue'];
       this.indexPickingBook =
           (doc.data() as Map<String, dynamic>)['indexPickingBook'];
       this.nextBookId = (doc.data() as Map<String, dynamic>)['nextBookId'];
