@@ -140,7 +140,7 @@ class BookService {
           .collection("groups")
           .doc(groupId)
           .collection("books")
-          .orderBy("dateCompleted", descending: true)
+          .orderBy("completedDate", descending: true)
           .get();
 
       query.docs.forEach((element) {

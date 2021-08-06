@@ -47,6 +47,7 @@ class _AddBookState extends State<AddBookScreen> {
 
   void _addBook(BuildContext context, String? groupName, BookModel book) async {
     AuthModel _auth = Provider.of<AuthModel>(context, listen: false);
+    UserModel user = Provider.of<UserModel>(context, listen: false);
 
     String _retVal = "";
     if (widget.onGroupCreation!) {

@@ -19,7 +19,6 @@ class GroupService {
             .data()!["members"]); // converts a dynamic list to a string array.
         _group.groupCreated = value.data()!["groupCreated"];
         _group.currentBookId = value.data()!["currentBookId"];
-        _group.currentBookDue = value.data()!["currentBookDue"];
       });
     } catch (e) {
       print(e);

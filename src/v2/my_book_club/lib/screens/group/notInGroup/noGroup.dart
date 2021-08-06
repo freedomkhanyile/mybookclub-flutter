@@ -25,18 +25,32 @@ class NoGroupScreen extends StatelessWidget {
       );
     }
 
-    
-  void _signOut(BuildContext context) async {
-     String _returnString = await AuthService().signOut();
+    void _signOut(BuildContext context) async {
+      String _returnString = await AuthService().signOut();
 
-    if (_returnString == "success") {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => OurRoot()), (route) => false);
+      if (_returnString == "success") {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => OurRoot()),
+            (route) => false);
+      }
     }
-  }
 
     return Scaffold(
-       body: Column(children: <Widget>[
+      body: Column(children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+              child: IconButton(
+                onPressed: () => _signOut(context),
+                icon: Icon(Icons.exit_to_app),
+                color: Theme.of(context).secondaryHeaderColor,
+              ),
+            ),
+          ],
+        ),
         Spacer(
           flex: 1,
         ),
@@ -57,10 +71,7 @@ class NoGroupScreen extends StatelessWidget {
           child: Text(
             "Since your are not in a book club, you can select join a club or create a club",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey
-            ),
+            style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
         ),
         Spacer(
@@ -91,21 +102,9 @@ class NoGroupScreen extends StatelessWidget {
             ],
           ),
         ),
-          SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: RaisedButton(
-                child: Text("Sign out"),
-                color: Theme.of(context).canvasColor,
-                shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0),
-                    side: BorderSide(
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 2)),
-                onPressed: () => _signOut(context)),
-          ),
+        SizedBox(
+          height: 40,
+        ),
       ]),
     );
   }

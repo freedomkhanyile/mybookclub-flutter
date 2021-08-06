@@ -16,10 +16,10 @@ class BottomCard extends StatefulWidget {
 }
 
 class _BottomCardState extends State<BottomCard> {
-  GroupModel _groupModel = GroupModel();
-  UserModel _currentUser = UserModel();
-  UserModel _pickingUser = UserModel();
-  BookModel _nextBook = BookModel();
+  var _groupModel = GroupModel();
+  var _currentUser = UserModel();
+  var _pickingUser = UserModel();
+  var _nextBook = BookModel();
 
   @override
   void didChangeDependencies() async {
@@ -28,18 +28,12 @@ class _BottomCardState extends State<BottomCard> {
     _currentUser = Provider.of<UserModel>(context);
     _groupModel = Provider.of<GroupModel>(context);
 
+    // ignore: unnecessary_null_comparison
     if (_groupModel != null) {
       _pickingUser = await UserService()
           .getUser(_groupModel.members![_groupModel.indexPickingBook!]);
 
-      if (_groupModel.nextBookId != "waiting") {
-        _nextBook = await BookService()
-            .getBook(_groupModel.id!, _groupModel.nextBookId!);
-      }
-
-      if (this.mounted) {
-        setState(() {});
-      }
+      setState(() {});
     }
   }
 
@@ -57,52 +51,25 @@ class _BottomCardState extends State<BottomCard> {
   }
 
   Widget _displayText() {
-    Widget retVal;
-
+    late Widget retVal;
+    // ignore: unnecessary_null_comparison
     if (_pickingUser.uid != null) {
       if (_groupModel.nextBookId == "waiting") {
         if (_pickingUser.uid == _currentUser.uid) {
+          // the current user must pick a book
           retVal = RaisedButton(
-            child: Text("Add next book"),
-            onPressed: () {
-              _goToAddBook(context);
-            },
+            child: Text("Select Next Book"),
+            onPressed: () {},
           );
         } else {
           retVal = Text(
             "Waiting for " + _pickingUser.fullName! + " to pick",
-            style: TextStyle(fontSize: 30, color: Colors.grey[600]),
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey[600],
+            ),
           );
         }
-      } else {
-        retVal = Column(
-          children: [
-            Text(
-              "Next Book Is:",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              (_nextBook != null) ? _nextBook.name! : "loading..",
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.grey[600],
-              ),
-            ),
-            Text(
-              (_nextBook != null) ? _nextBook.author! : "loading..",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey[600],
-              ),
-            ),
-          ],
-        );
       }
     } else {
       retVal = Text(

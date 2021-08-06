@@ -31,8 +31,8 @@ class _TopCardState extends State<TopCard> {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (this.mounted) {
         setState(() {
-          _timeUntil =
-              TimeLeft().timeLeft(_groupModel.currentBookDue!.toDate());
+          // _timeUntil =
+          //     TimeLeft().timeLeft(_groupModel.currentBookDue!.toDate());
         });
       }
     });

@@ -10,8 +10,6 @@ class GroupModel {
   String? currentBookId;
   int? indexPickingBook;
   String? nextBookId;
-  Timestamp? currentBookDue;
-  Timestamp? nextBookDue;
 
   GroupModel({
     this.id,
@@ -23,8 +21,6 @@ class GroupModel {
     this.currentBookId,
     this.indexPickingBook,
     this.nextBookId,
-    this.currentBookDue,
-    this.nextBookDue,
   });
 
   GroupModel.$fromDocumentSnapshot({required DocumentSnapshot doc}) {
@@ -40,9 +36,6 @@ class GroupModel {
       this.indexPickingBook =
           (doc.data() as Map<String, dynamic>)['indexPickingBook'];
       this.nextBookId = (doc.data() as Map<String, dynamic>)['nextBookId'];
-      this.currentBookDue =
-          (doc.data() as Map<String, dynamic>)['currentBookDue'];
-      this.nextBookDue = (doc.data() as Map<String, dynamic>)['nextBookDue'];
     }
   }
 }
