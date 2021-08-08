@@ -73,10 +73,11 @@ class BookService {
       });
 
       // add current book to group schedule.
-      await _firestore
-          .collection("groups")
-          .doc(groupId)
-          .update({"nextBookId": _docRef.id, "indexPickingBook": nextIndex});
+      await _firestore.collection("groups").doc(groupId).update({
+        "nextBookId": _docRef.id,
+        "nextBookDue": model.completedDate,
+        "indexPickingBook": nextIndex,
+      });
 
       retVal = "success";
     } catch (e) {
