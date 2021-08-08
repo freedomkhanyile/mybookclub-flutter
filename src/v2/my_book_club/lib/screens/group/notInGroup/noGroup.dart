@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:my_book_club/models/userModel.dart';
 import 'package:my_book_club/screens/group/createGroup/createGroup.dart';
 import 'package:my_book_club/screens/group/joinGroup/joinGroup.dart';
 import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class NoGroupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    UserModel _currentUser = Provider.of<UserModel>(context);
+
     void _goToJoin(BuildContext context) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => JoinGroupScreen(),
+          builder: (context) => JoinGroupScreen(
+            userModel: _currentUser,
+          ),
         ),
       );
     }

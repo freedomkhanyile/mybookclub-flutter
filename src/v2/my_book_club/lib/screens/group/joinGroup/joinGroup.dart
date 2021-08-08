@@ -3,23 +3,23 @@ import 'package:my_book_club/models/userModel.dart';
 import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/services/groupService.dart';
 import 'package:my_book_club/widgets/shadowContainer.dart';
-import 'package:provider/provider.dart';
 
 class JoinGroupScreen extends StatefulWidget {
+  final UserModel userModel;
+
+  JoinGroupScreen({required this.userModel});
+
   @override
   _JoinGroupScreenState createState() => _JoinGroupScreenState();
 }
 
-class _JoinGroupScreenState extends State<JoinGroupScreen> {  
-
+class _JoinGroupScreenState extends State<JoinGroupScreen> {
   TextEditingController _groupIdController = TextEditingController();
 
   void _joinGroupScreen(BuildContext context, String groupId) async {
+    UserModel _currentUser = widget.userModel;
 
-     UserModel _currentUser = Provider.of<UserModel>(context, listen: false);
-
-    String _retVal = await GroupService()
-        .joinGroup(groupId, _currentUser);
+    String _retVal = await GroupService().joinGroup(groupId, _currentUser);
     if (_retVal == "success") {
       Navigator.pushAndRemoveUntil(
           context,
@@ -30,7 +30,6 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
     }
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +69,8 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
                         ),
                       ),
                     ),
-                    onPressed: () => _joinGroupScreen(context, _groupIdController.text),
+                    onPressed: () =>
+                        _joinGroupScreen(context, _groupIdController.text),
                   ),
                 ],
               ),
