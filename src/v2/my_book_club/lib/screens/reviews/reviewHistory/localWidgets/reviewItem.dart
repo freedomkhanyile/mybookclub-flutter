@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_book_club/models/reviewModel.dart';
 import 'package:my_book_club/models/userModel.dart';
 import 'package:my_book_club/services/userService.dart';
+import 'package:my_book_club/widgets/shadowContainer.dart';
 
 class ReviewItem extends StatefulWidget {
   final ReviewModel review;
@@ -13,7 +14,7 @@ class ReviewItem extends StatefulWidget {
 }
 
 class _ReviewItemState extends State<ReviewItem> {
-  late UserModel user;
+  late UserModel user = UserModel();
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
@@ -23,31 +24,44 @@ class _ReviewItemState extends State<ReviewItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ShadowContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            (user != null) ? user.fullName! : "loading..",
+            (user.uid != null) ? user.fullName! : "loading..",
             style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+              fontSize: 25,
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.italic,
+              color: Colors.grey[600],
             ),
           ),
           SizedBox(
             height: 10,
           ),
-          Text(
-            "Rating " + widget.review.rating.toString(),
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          (widget.review.rating! > 5)
+              ? Text(
+                  "Rating " + widget.review.rating.toString(),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.green[600],
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              : Text(
+                  "Rating " + widget.review.rating.toString(),
+                  style: TextStyle(
+                      fontSize: 20,
+                    color: Colors.red[800],
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
           (widget.review.review != null)
               ? Text(
                   widget.review.review!,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     color: Colors.grey[600],
                   ),
                 )

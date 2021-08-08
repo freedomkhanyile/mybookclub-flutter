@@ -33,7 +33,6 @@ class _BottomCardState extends State<BottomCard> {
       _pickingUser = await UserService()
           .getUser(_groupModel.members![_groupModel.indexPickingBook!]);
         _nextBook = await BookService().getBook(_groupModel.id!, _groupModel.nextBookId!);
-
       setState(() {});
     }
   }

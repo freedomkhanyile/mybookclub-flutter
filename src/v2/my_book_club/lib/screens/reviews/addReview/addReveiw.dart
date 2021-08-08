@@ -21,7 +21,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   TextEditingController _reviewController = TextEditingController();
   void _reviewBook(int rating, String review) {
     if (widget.uid != null) {
-      GroupState().finishedBook(
+      BookService().finishedBook(
         widget.currentGroup.id!,
         widget.currentGroup.currentBookId!,
         widget.uid!,

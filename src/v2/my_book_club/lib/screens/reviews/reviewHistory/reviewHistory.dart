@@ -41,13 +41,13 @@ class _ReviewHistoryScreenState extends State<ReviewHistoryScreen> {
                       ],
                     ),
                   );
-                } else {
-                  return Padding(
+                } else {                  
+                  return (snapshot.data != null) ? Padding(
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: ReviewItem(
                       review: snapshot.data![index - 1],
                     ),
-                  );
+                  ) : Text("No Reviews Yet..");
                 }
               },
             );

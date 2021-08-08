@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_book_club/models/reviewModel.dart';
 
 class BookModel {
   String? id;
@@ -6,6 +7,7 @@ class BookModel {
   String? author;
   int? length;
   Timestamp? completedDate;
+  List<ReviewModel>? reviews;
   
   BookModel({
     this.id,
@@ -13,6 +15,7 @@ class BookModel {
     this.author,
     this.length,
     this.completedDate,
+    this.reviews
   });
 
   BookModel.$fromDocumentSnapshot({required DocumentSnapshot doc}) {
@@ -22,6 +25,7 @@ class BookModel {
       this.author = (doc.data() as Map<String, dynamic>)['author'];
       this.length = (doc.data() as Map<String, dynamic>)['length'];
       this.completedDate = (doc.data() as Map<String, dynamic>)['completedDate'];      
+      this.reviews =  (doc.data() as Map<String, dynamic>)['reviews'];  
     }
   }
 

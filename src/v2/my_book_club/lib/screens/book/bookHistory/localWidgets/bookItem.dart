@@ -25,6 +25,7 @@ class BookItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShadowContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             book.name!,
@@ -43,9 +44,13 @@ class BookItem extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          RaisedButton(
-            child: Text("Reviews"),
-            onPressed: () => _goToReviewHistory(context),
+          SizedBox(
+            width: double.infinity,
+            height: 40,
+            child: RaisedButton(
+              child: Text("Reviews"),
+              onPressed: () => _goToReviewHistory(context),
+            ),
           )
         ],
       ),

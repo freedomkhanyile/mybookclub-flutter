@@ -45,7 +45,7 @@ class _TopCardState extends State<TopCard> {
 
     _groupModel = Provider.of<GroupModel>(context);
 
-    if (_groupModel != null) {
+    if (_groupModel.id != null) {
       isUserDoneWithBook();
       _currentBook = await BookService()
           .getBook(_groupModel.id!, _groupModel.currentBookId!);
@@ -67,7 +67,10 @@ class _TopCardState extends State<TopCard> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddReviewScreen(currentGroup: _groupModel),
+        builder: (context) => AddReviewScreen(
+          currentGroup: _groupModel,
+          uid: _authModel.uid,
+        ),
       ),
     );
   }
@@ -136,7 +139,7 @@ class _TopCardState extends State<TopCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-           (_currentBook.name != null) ? _currentBook.name! : 'loading..',
+            (_currentBook.name != null) ? _currentBook.name! : 'loading..',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
