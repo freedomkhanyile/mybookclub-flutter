@@ -32,7 +32,8 @@ class _BottomCardState extends State<BottomCard> {
     if (_groupModel != null) {
       _pickingUser = await UserService()
           .getUser(_groupModel.members![_groupModel.indexPickingBook!]);
-        _nextBook = await BookService().getBook(_groupModel.id!, _groupModel.nextBookId!);
+      _nextBook =
+          await BookService().getBook(_groupModel.id!, _groupModel.nextBookId!);
       setState(() {});
     }
   }
@@ -82,7 +83,6 @@ class _BottomCardState extends State<BottomCard> {
           );
         }
       } else {
-         
         retVal = Column(
           children: [
             Text(
@@ -95,20 +95,20 @@ class _BottomCardState extends State<BottomCard> {
             SizedBox(
               height: 20,
             ),
-             Text(
-           (_nextBook.name != null) ? _nextBook.name! : 'loading..',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
+            Text(
+              (_nextBook.name != null) ? _nextBook.name! : 'loading..',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text(
-            (_nextBook.author! != null) ? _nextBook.author! : 'loading..',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey[600],
+            Text(
+              (_nextBook.author != null) ? _nextBook.author! : 'loading..',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey[600],
+              ),
             ),
-          ),
           ],
         );
       }
