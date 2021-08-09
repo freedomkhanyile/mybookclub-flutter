@@ -4,7 +4,7 @@ admin.initializeApp();
 
 const database = admin.firestore();
  
-exports.checkForBookTransition = functions.pubsub.schedule('0 * * * *').onRun(async (context) => {
+exports.checkForBookTransition = functions.pubsub.schedule('every 1 minutes').onRun(async (context) => {
 
     const query = await database.collection("groups")
     .where("currentBookDue",'<=', admin.firestore.Timestamp.now())

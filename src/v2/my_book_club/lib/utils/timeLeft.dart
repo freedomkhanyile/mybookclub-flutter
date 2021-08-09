@@ -23,7 +23,10 @@ class TimeLeft {
       retVal = " "+ _minUntil.toString() + " mins";
     } else if (_minUntil == 0) {
       retVal = " almost there ";
-    } else {
+    } else if(_minUntil < 0) {
+      retVal = " book is overdue";
+    } 
+    else {
       retVal = " error";
     }
 
