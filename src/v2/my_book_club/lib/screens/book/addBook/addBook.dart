@@ -10,6 +10,7 @@ import 'package:my_book_club/services/bookService.dart';
 import 'package:my_book_club/services/groupService.dart';
 import 'package:my_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class AddBookScreen extends StatefulWidget {
   final bool? onGroupCreation;
@@ -58,10 +59,24 @@ class _AddBookState extends State<AddBookScreen> {
     }
   }
 
-  void _addBook(BuildContext context, String? groupName, BookModel book) async {
-    // AuthModel _auth = Provider.of<AuthModel>(context, listen: false);
-    // UserModel user = Provider.of<UserModel>(context, listen: false);
+  // set time
+  TimeOfDay _time = TimeOfDay(hour: 7, minute: 15);
 
+  void _selectTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: _time,
+    );
+    if (newTime != null) {
+      setState(() {
+        _time = newTime;
+           _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
+              _selectedDate.day, _time.hour, _time.minute, 0, 0, 0);
+      });
+    }
+  }
+
+  void _addBook(BuildContext context, String? groupName, BookModel book) async {
     String _retVal = "";
 
     if (widget.onGroupCreation!) {
@@ -133,11 +148,17 @@ class _AddBookState extends State<AddBookScreen> {
                   ),
                   // datepicker (package)
 
-                  Text(DateFormat.yMMMMd("en_US").format(_selectedDate)),
-                  Text(DateFormat("H:mm").format(_selectedDate)),
+                  Text("Selected Due Date: " +
+                      DateFormat.yMMMMd("en_US").format(_selectedDate)),
                   FlatButton(
                     child: Text("Change Date"),
                     onPressed: () => _selectDate(context),
+                  ),
+                  Text("Selected Time: " +
+                      DateFormat("H:mm").format(_selectedDate)),
+                  FlatButton(
+                    child: Text("Change Time"),
+                    onPressed: _selectTime,
                   ),
                   RaisedButton(
                     child: Padding(
