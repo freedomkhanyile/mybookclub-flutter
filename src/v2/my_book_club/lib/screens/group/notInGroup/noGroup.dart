@@ -26,7 +26,9 @@ class NoGroupScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CreateGroupScreen(),
+          builder: (context) => CreateGroupScreen(
+            currentUser: _currentUser,
+          ),
         ),
       );
     }

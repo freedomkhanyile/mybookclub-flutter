@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,9 +25,11 @@ class InGroupScreen extends StatefulWidget {
 
 class _InGroupScreenState extends State<InGroupScreen> {
   final key = new GlobalKey<ScaffoldState>();
-
+  UserModel? _currentUser;
   @override
   void didChangeDependencies() {
+    _currentUser = Provider.of<UserModel>(context);
+
     super.didChangeDependencies();
   }
 
@@ -90,21 +93,43 @@ class _InGroupScreenState extends State<InGroupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
+      appBar: AppBar(
+        title: Text(
+          "Hello! " +
+              ((_currentUser != null) ? _currentUser!.fullName! : "anonymous"),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0, // gets rid of the shadow drop.
+        actions: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+            child: IconButton(
+              onPressed: () => _signOut(context),
+              icon: Icon(Icons.exit_to_app),
+              color: Theme.of(context).secondaryHeaderColor,
+            ),
+          ),
+        ],
+      ),
       body: ListView(
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                child: IconButton(
-                  onPressed: () => _signOut(context),
-                  icon: Icon(Icons.exit_to_app),
-                  color: Theme.of(context).secondaryHeaderColor,
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: <Widget>[
+          //     Padding(
+          //       padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+          //       child: IconButton(
+          //         onPressed: () => _signOut(context),
+          //         icon: Icon(Icons.exit_to_app),
+          //         color: Theme.of(context).secondaryHeaderColor,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: TopCard(),

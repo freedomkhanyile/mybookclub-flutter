@@ -7,20 +7,26 @@ import 'package:my_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
 
 class CreateGroupScreen extends StatefulWidget {
+   UserModel? currentUser;
+   CreateGroupScreen({this.currentUser});
   @override
   _CreateGroupScreenState createState() => _CreateGroupScreenState();
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
+  UserModel? _currentUser;
   TextEditingController _groupNameController = TextEditingController();
   void _goToAddBook(BuildContext context, String groupName) async {
+    _currentUser = widget.currentUser;
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AddBookScreen(
           onGroupCreation: true,
           groupName: groupName,
-         ),
+          currentUser: _currentUser!,
+        ),
       ),
     );
   }

@@ -70,8 +70,8 @@ class _AddBookState extends State<AddBookScreen> {
     if (newTime != null) {
       setState(() {
         _time = newTime;
-           _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
-              _selectedDate.day, _time.hour, _time.minute, 0, 0, 0);
+        _selectedDate = DateTime(_selectedDate.year, _selectedDate.month,
+            _selectedDate.day, _time.hour, _time.minute, 0, 0, 0);
       });
     }
   }
@@ -148,17 +148,23 @@ class _AddBookState extends State<AddBookScreen> {
                   ),
                   // datepicker (package)
 
-                  Text("Selected Due Date: " +
-                      DateFormat.yMMMMd("en_US").format(_selectedDate)),
-                  FlatButton(
-                    child: Text("Change Date"),
-                    onPressed: () => _selectDate(context),
-                  ),
-                  Text("Selected Time: " +
-                      DateFormat("H:mm").format(_selectedDate)),
-                  FlatButton(
-                    child: Text("Change Time"),
-                    onPressed: _selectTime,
+                  Text(DateFormat.yMMMMd("en_US").format(_selectedDate)),
+                  Text(DateFormat("H:mm").format(_selectedDate)),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FlatButton(
+                          child: Text("Change Date"),
+                          onPressed: () => _selectDate(context),
+                        ),
+                      ),
+                      Expanded(
+                        child: FlatButton(
+                          child: Text("Change Time"),
+                          onPressed: () => _selectTime(),
+                        ),
+                      ),
+                    ],
                   ),
                   RaisedButton(
                     child: Padding(
