@@ -11,7 +11,7 @@ class UserService {
         'fullName': model.fullName,
         'email': model.email,
         'accountCreated': Timestamp.now(),
-         'notifToken': model.notifToken,
+        'notifToken': model.notifToken,
       });
 
       retVal = "success";

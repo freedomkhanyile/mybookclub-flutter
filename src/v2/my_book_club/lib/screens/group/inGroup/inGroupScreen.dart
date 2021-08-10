@@ -98,8 +98,8 @@ class _InGroupScreenState extends State<InGroupScreen> {
           "Hello! " +
               ((_currentUser != null) ? _currentUser!.fullName! : "anonymous"),
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            fontWeight: FontWeight.w300,
           ),
         ),
         backgroundColor: Colors.transparent,

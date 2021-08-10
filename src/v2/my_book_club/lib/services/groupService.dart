@@ -94,7 +94,7 @@ class GroupService {
       await _firestore
           .collection("users")
           .doc(user.uid!)
-          .update({'groupId': groupId});
+          .update({'groupId': groupId.trim()});
 
       retVal = "success";
     } catch (e) {
