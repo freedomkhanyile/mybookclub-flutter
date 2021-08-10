@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:my_book_club/models/authModel.dart';
 import 'package:my_book_club/models/groupModel.dart';
@@ -20,6 +21,27 @@ class OurRoot extends StatefulWidget {
 class _OurRootState extends State<OurRoot> {
   AuthState _authStatus = AuthState.unknown;
   String currentUid = "";
+  late FirebaseMessaging _firebaseMessaging;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _firebaseMessaging = FirebaseMessaging.instance;
+    _firebaseMessaging.getToken().then((value) => print(value));
+    // Returns a Stream that is called when an incoming FCM payload is received whilst the Flutter instance is in the foreground,
+    // containing a [RemoteMessage]
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("onMessage: $message");
+    });
+
+    // Returns a [Stream] that is called when a user presses a notification displayed via FCM.
+    // This replaces the previous onLaunch and onResume handlers.
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("onMessageOpenedApp: $message");
+    });
+  }
+
   // everytime something changes in the dependencies of this screen this method
   @override
   void didChangeDependencies() async {
@@ -78,16 +100,16 @@ class LoggedIn extends StatelessWidget {
 
     UserModel _userStream = Provider.of<UserModel>(context);
     // if in a group.
-    if (_userStream.email !=null) {
+    if (_userStream.email != null) {
       if (_userStream.groupId != null) {
         retWidgetVal = StreamProvider<GroupModel>.value(
-          value: DbStream().getCurrentGroup(_userStream.groupId!),
-          initialData: GroupModel(),
-          child: InGroupScreen());
+            value: DbStream().getCurrentGroup(_userStream.groupId!),
+            initialData: GroupModel(),
+            child: InGroupScreen());
       } else {
         retWidgetVal = NoGroupScreen();
       }
-    }  else {
+    } else {
       retWidgetVal = SplashScreen();
     }
 

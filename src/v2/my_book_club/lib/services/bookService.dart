@@ -79,6 +79,34 @@ class BookService {
         "indexPickingBook": nextIndex,
       });
 
+      // add a notification document
+
+      DocumentSnapshot doc =
+          await _firestore.collection("groups").doc(groupId).get();
+      if (doc.exists) {
+        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+
+        await createNextBookNotification(
+            List<String>.from(data?["tokens"]), model.name!, model.author!);
+      }
+
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
+
+    return retVal;
+  }
+
+  Future<String> createNextBookNotification(
+      List<String> tokens, String bookName, String author) async {
+    String retVal = "error";
+    try {
+      await _firestore.collection("notifications").add({
+        'bookName': bookName,
+        'author': author,
+        'tokens': tokens,
+      });
       retVal = "success";
     } catch (e) {
       print(e);

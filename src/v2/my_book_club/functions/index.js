@@ -31,3 +31,26 @@ exports.checkForBookTransition = functions.pubsub.schedule('every 60 minutes').o
         })
     })
 })
+
+exports.onCreateNotification = functions.firestore.document("/notifications/{notificationDoc}").onCreate(async (notifSnapshot, context) => {
+    var tokens = notifSnapshot.data()['tokens'];
+    var bookName = notifSnapshot.data()['bookName'];
+    var author = notifSnapshot.data()['author'];
+
+    var title = `Next Book Announced!`;
+    var body = `Next book is ${bookName} by ${author}`;
+
+    tokens.forEach(async eachToken => {
+        const message = {
+            notification: { title: title, body: body },
+            token: eachToken,
+            data: { click_action: 'FLUTTER_NOTIFICATION_CLICK' },
+        }
+
+        admin.messaging().send(message).then(response => {
+            return console.log("Notification Succesful");
+        }).catch(error => {
+            return console.log("Error: " + error);
+        });
+    });
+})
