@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.flutter.my_book_club">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="my_book_club"
+        android:label="my book club"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity
