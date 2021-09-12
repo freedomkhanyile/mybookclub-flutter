@@ -48,7 +48,10 @@ class BookItem extends StatelessWidget {
             width: double.infinity,
             height: 40,
             child: RaisedButton(
-              child: Text("Reviews"),
+              child: Text(
+                "Reviews",
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () => _goToReviewHistory(context),
             ),
           )

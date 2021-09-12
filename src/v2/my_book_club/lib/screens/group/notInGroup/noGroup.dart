@@ -64,7 +64,11 @@ class NoGroupScreen extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.all(80.0),
-          child: Image.asset("assets/logo.jpg"),
+          child: Image.asset(
+            "assets/Jotta-logo.png",
+            width: 150,
+            height: 150,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -90,14 +94,30 @@ class NoGroupScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              RaisedButton(
-                child: Text("Create"),
-                color: Theme.of(context).canvasColor,
-                shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.circular(6.0),
-                    side: BorderSide(
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 2)),
+              // RaisedButton(
+              //   child: Text("Create"),
+              //   color: Theme.of(context).canvasColor,
+              //   shape: ContinuousRectangleBorder(
+              //       borderRadius: BorderRadius.circular(6.0),
+              //       side: BorderSide(
+              //           color: Theme.of(context).secondaryHeaderColor,
+              //           width: 2)),
+              //   onPressed: () => _goToCreate(context),
+              // ),
+              OutlineButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50)),
+                highlightElevation: 0,
+                splashColor: Colors.grey,
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Text(
+                  "Create",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
                 onPressed: () => _goToCreate(context),
               ),
               RaisedButton(

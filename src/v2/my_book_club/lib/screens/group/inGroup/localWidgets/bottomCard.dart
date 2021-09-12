@@ -68,7 +68,12 @@ class _BottomCardState extends State<BottomCard> {
         if (_pickingUser.uid == _currentUser.uid) {
           // the current user must pick a book
           retVal = RaisedButton(
-            child: Text("Select Next Book"),
+            child: Text(
+              "Select Next Book",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
             onPressed: () {
               _goToAddBook(context);
             },

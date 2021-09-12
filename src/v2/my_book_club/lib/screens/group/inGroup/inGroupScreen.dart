@@ -99,7 +99,8 @@ class _InGroupScreenState extends State<InGroupScreen> {
               ((_currentUser != null) ? _currentUser!.fullName! : "anonymous"),
           style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
           ),
         ),
         backgroundColor: Colors.transparent,

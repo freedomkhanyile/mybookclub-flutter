@@ -14,7 +14,7 @@ class Login extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(32),
-                child: Image.asset("assets/logo.jpg"),
+                child: Image.asset("assets/Jotta-logo.png", width: 150, height: 150,),
               ),
               SizedBox(height:20.0,),
               LoginForm()

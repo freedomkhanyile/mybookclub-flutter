@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:my_book_club/screens/root/root.dart';
 import 'package:my_book_club/screens/signUp/signUp.dart';
 import 'package:my_book_club/services/auth.dart';
+import 'package:my_book_club/utils/ourTheme.dart';
 // import 'package:my_book_club/screens/signup/signup.dart';
 // import 'package:my_book_club/states/currentUser.dart';
- 
+
 enum LoginType { email, google }
 
 class LoginForm extends StatefulWidget {
@@ -56,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget _googleButton() {
     return OutlineButton(
       splashColor: Colors.grey,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       highlightElevation: 0,
       borderSide: BorderSide(color: Colors.grey),
       child: Padding(
@@ -153,7 +154,10 @@ class _LoginFormState extends State<LoginForm> {
             );
           },
         ),
-        _googleButton()
+        SizedBox(
+          width: double.infinity,
+          child: _googleButton(),
+        ),
       ]),
     );
   }

@@ -4,36 +4,39 @@ class OurTheme {
   Color _cloud = HexColor("#FFFFFF");
   Color _grey = HexColor("#94989B");
   Color _black = HexColor("#000000");
+
+  // Change App theme
+  Color _red = HexColor("#D63031");
+  Color _lightRed = HexColor("#FF7675");
+
   Color _lightGreen = HexColor("#83BF4F");
   Color _darkGreen = HexColor("#699635");
-  double _borderRadius = 6.0;
+
+  double _borderRadius = 10.0;
+  double _btnBorderRadius = 50.0;
   ThemeData buildTheme() {
     return ThemeData(
       canvasColor: _cloud,
-      primaryColor: _lightGreen,
+      primaryColor: _red,
       accentColor: _black,
-      secondaryHeaderColor: _grey, 
+      secondaryHeaderColor: _grey,
       hintColor: _grey,
-      inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(_borderRadius),
-        borderSide: BorderSide(
-          color: _grey
-        )
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(_borderRadius),
-        borderSide: BorderSide(
-          color: _lightGreen
-        )
-      )),
+      inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(_borderRadius),
+              borderSide: BorderSide(color: _grey)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(_borderRadius),
+              borderSide: BorderSide(color: _lightRed))),
       buttonTheme: ButtonThemeData(
-         buttonColor: _lightGreen,
-         padding: EdgeInsets.symmetric(horizontal: 20.0),
-         minWidth: 150,
-         height: 50,
-         shape: RoundedRectangleBorder(
-           borderRadius: BorderRadius.circular(_borderRadius),),
-      )
+        buttonColor: _red,
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        minWidth: 150,
+        height: 50,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_btnBorderRadius),
+        ),
+      ),
     );
   }
 }
