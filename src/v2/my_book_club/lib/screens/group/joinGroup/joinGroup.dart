@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/screens/root/root.dart';
-import 'package:my_book_club/services/groupService.dart';
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/screens/root/root.dart';
+import 'package:we_book_club/services/groupService.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 
 class JoinGroupScreen extends StatefulWidget {
   final UserModel userModel;

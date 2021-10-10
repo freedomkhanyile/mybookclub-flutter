@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:841982960258:android:fc1300e828b45205308a9b",
+        "mobilesdk_app_id": "1:841982960258:android:d7b7ef4d1dbedf4b308a9b",
         "android_client_info": {
-          "package_name": "com.flutter.my_book_club"
+          "package_name": "co.za.we_book_club"
         }
       },
       "oauth_client": [
         {
-          "client_id": "841982960258-rduu5p6ji5fvvkk25t5h5a1kbk6m84o0.apps.googleusercontent.com",
+          "client_id": "841982960258-ng8upmndlbp7ru1g0jgaodnh9ckpmv8c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.flutter.my_book_club",
+            "package_name": "co.za.we_book_club",
             "certificate_hash": "c4a732a0c9e9caeb4b67bb46fe1e38b1351b95bf"
           }
         },

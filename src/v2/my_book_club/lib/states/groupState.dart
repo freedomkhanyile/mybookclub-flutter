@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:my_book_club/services/bookService.dart';
+import 'package:we_book_club/services/bookService.dart';
 
 class GroupState extends ChangeNotifier {
   

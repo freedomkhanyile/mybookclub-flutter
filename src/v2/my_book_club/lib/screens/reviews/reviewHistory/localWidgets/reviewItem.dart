@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/reviewModel.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/services/userService.dart';
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/models/reviewModel.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/services/userService.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 
 class ReviewItem extends StatefulWidget {
   final ReviewModel review;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/groupModel.dart';
-import 'package:my_book_club/services/bookService.dart';
-import 'package:my_book_club/states/groupState.dart';
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/models/groupModel.dart';
+import 'package:we_book_club/services/bookService.dart';
+import 'package:we_book_club/states/groupState.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 
 class AddReviewScreen extends StatefulWidget {
   final GroupModel currentGroup;

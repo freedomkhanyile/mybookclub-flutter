@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/authModel.dart';
-import 'package:my_book_club/models/groupModel.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/screens/group/inGroup/inGroupScreen.dart';
-import 'package:my_book_club/screens/group/notInGroup/noGroup.dart';
-import 'package:my_book_club/screens/login/login.dart';
-import 'package:my_book_club/screens/splashScreen/splashScreen.dart';
-import 'package:my_book_club/services/dbStream.dart';
+import 'package:we_book_club/models/authModel.dart';
+import 'package:we_book_club/models/groupModel.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/screens/group/inGroup/inGroupScreen.dart';
+import 'package:we_book_club/screens/group/notInGroup/noGroup.dart';
+import 'package:we_book_club/screens/login/login.dart';
+import 'package:we_book_club/screens/splashScreen/splashScreen.dart';
+import 'package:we_book_club/services/dbStream.dart';
 import 'package:provider/provider.dart';
 
 enum AuthState { unknown, notLoggedIn, loggedIn }

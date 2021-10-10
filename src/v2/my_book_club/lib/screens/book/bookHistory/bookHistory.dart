@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/bookModel.dart';
-import 'package:my_book_club/screens/book/bookHistory/localWidgets/bookItem.dart';
-import 'package:my_book_club/services/bookService.dart';
+import 'package:we_book_club/models/bookModel.dart';
+import 'package:we_book_club/screens/book/bookHistory/localWidgets/bookItem.dart';
+import 'package:we_book_club/services/bookService.dart';
 
 class BookHistoryScreen extends StatefulWidget {
   final String groupId;

@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/bookModel.dart';
-import 'package:my_book_club/models/groupModel.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/screens/book/addBook/addBook.dart';
-import 'package:my_book_club/services/bookService.dart';
-import 'package:my_book_club/services/userService.dart';
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/models/bookModel.dart';
+import 'package:we_book_club/models/groupModel.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/screens/book/addBook/addBook.dart';
+import 'package:we_book_club/services/bookService.dart';
+import 'package:we_book_club/services/userService.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
 
 class BottomCard extends StatefulWidget {
@@ -28,8 +28,7 @@ class _BottomCardState extends State<BottomCard> {
     _currentUser = Provider.of<UserModel>(context);
     _groupModel = Provider.of<GroupModel>(context);
 
-    // ignore: unnecessary_null_comparison
-    if (_groupModel != null) {
+     if (_groupModel.members != null) {
       _pickingUser = await UserService()
           .getUser(_groupModel.members![_groupModel.indexPickingBook!]);
       _nextBook =

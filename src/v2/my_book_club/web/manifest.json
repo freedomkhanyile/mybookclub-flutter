@@ -1,6 +1,6 @@
 {
-    "name": "my_book_club",
-    "short_name": "my_book_club",
+    "name": "we_book_club",
+    "short_name": "we_book_club",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

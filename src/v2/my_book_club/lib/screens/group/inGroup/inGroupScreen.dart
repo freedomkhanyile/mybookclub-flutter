@@ -3,19 +3,19 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_book_club/models/groupModel.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/screens/book/addBook/addBook.dart';
-import 'package:my_book_club/screens/book/bookHistory/bookHistory.dart';
-import 'package:my_book_club/screens/group/inGroup/localWidgets/bottomCard.dart';
-import 'package:my_book_club/screens/group/inGroup/localWidgets/topCard.dart';
-import 'package:my_book_club/screens/reviews/addReview/addReveiw.dart';
+import 'package:we_book_club/models/groupModel.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/screens/book/addBook/addBook.dart';
+import 'package:we_book_club/screens/book/bookHistory/bookHistory.dart';
+import 'package:we_book_club/screens/group/inGroup/localWidgets/bottomCard.dart';
+import 'package:we_book_club/screens/group/inGroup/localWidgets/topCard.dart';
+import 'package:we_book_club/screens/reviews/addReview/addReveiw.dart';
 
-import 'package:my_book_club/screens/root/root.dart';
-import 'package:my_book_club/services/auth.dart';
-import 'package:my_book_club/services/groupService.dart';
+import 'package:we_book_club/screens/root/root.dart';
+import 'package:we_book_club/services/auth.dart';
+import 'package:we_book_club/services/groupService.dart';
 
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
 
 class InGroupScreen extends StatefulWidget {

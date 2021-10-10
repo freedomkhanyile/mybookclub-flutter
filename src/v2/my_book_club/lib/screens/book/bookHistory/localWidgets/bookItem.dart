@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/bookModel.dart';
-import 'package:my_book_club/screens/reviews/reviewHistory/reviewHistory.dart';
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/models/bookModel.dart';
+import 'package:we_book_club/screens/reviews/reviewHistory/reviewHistory.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 
 class BookItem extends StatelessWidget {
   final BookModel book;

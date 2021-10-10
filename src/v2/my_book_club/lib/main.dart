@@ -2,10 +2,10 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/authModel.dart';
-import 'package:my_book_club/screens/root/root.dart';
-import 'package:my_book_club/services/auth.dart';
-import 'package:my_book_club/utils/ourTheme.dart'; 
+import 'package:we_book_club/models/authModel.dart';
+import 'package:we_book_club/screens/root/root.dart';
+import 'package:we_book_club/services/auth.dart';
+import 'package:we_book_club/utils/ourTheme.dart'; 
 import 'package:provider/provider.dart';
 // Import the firebase_core plugin
  void main() async{

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_book_club/models/groupModel.dart';
-import 'package:my_book_club/models/userModel.dart';
+import 'package:we_book_club/models/groupModel.dart';
+import 'package:we_book_club/models/userModel.dart';
 
 class DbStream {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;

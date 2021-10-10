@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/screens/book/addBook/addBook.dart';
-import 'package:my_book_club/screens/root/root.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/screens/book/addBook/addBook.dart';
+import 'package:we_book_club/screens/root/root.dart';
 
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
 
 class CreateGroupScreen extends StatefulWidget {

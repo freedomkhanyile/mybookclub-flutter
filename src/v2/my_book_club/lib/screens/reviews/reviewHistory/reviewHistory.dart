@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/reviewModel.dart';
-import 'package:my_book_club/screens/reviews/reviewHistory/localWidgets/reviewItem.dart';
-import 'package:my_book_club/services/bookService.dart';
+import 'package:we_book_club/models/reviewModel.dart';
+import 'package:we_book_club/screens/reviews/reviewHistory/localWidgets/reviewItem.dart';
+import 'package:we_book_club/services/bookService.dart';
 
 class ReviewHistoryScreen extends StatefulWidget {
   final String groupId;

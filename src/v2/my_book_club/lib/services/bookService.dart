@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_book_club/models/bookModel.dart';
-import 'package:my_book_club/models/reviewModel.dart';
+import 'package:we_book_club/models/bookModel.dart';
+import 'package:we_book_club/models/reviewModel.dart';
 
 class BookService {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;

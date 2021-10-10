@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_book_club/screens/login/login.dart';
-import 'package:my_book_club/services/auth.dart';
+import 'package:we_book_club/screens/login/login.dart';
+import 'package:we_book_club/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class SignUpForm extends StatefulWidget {

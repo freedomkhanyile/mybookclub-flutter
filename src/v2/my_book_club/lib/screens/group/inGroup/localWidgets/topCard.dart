@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/authModel.dart';
-import 'package:my_book_club/models/bookModel.dart';
-import 'package:my_book_club/models/groupModel.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/screens/book/addBook/addBook.dart';
-import 'package:my_book_club/screens/reviews/addReview/addReveiw.dart';
-import 'package:my_book_club/services/bookService.dart';
-import 'package:my_book_club/utils/timeLeft.dart';
-import 'package:my_book_club/widgets/shadowContainer.dart';
+import 'package:we_book_club/models/authModel.dart';
+import 'package:we_book_club/models/bookModel.dart';
+import 'package:we_book_club/models/groupModel.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/screens/book/addBook/addBook.dart';
+import 'package:we_book_club/screens/reviews/addReview/addReveiw.dart';
+import 'package:we_book_club/services/bookService.dart';
+import 'package:we_book_club/utils/timeLeft.dart';
+import 'package:we_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
 
 class TopCard extends StatefulWidget {

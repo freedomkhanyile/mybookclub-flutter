@@ -1,4 +1,4 @@
-# my_book_club
+# we_book_club
 
 A new Flutter project.
 

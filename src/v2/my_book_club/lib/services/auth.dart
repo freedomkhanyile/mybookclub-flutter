@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_book_club/models/authModel.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/services/userService.dart';
+import 'package:we_book_club/models/authModel.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/services/userService.dart';
 
 class AuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;

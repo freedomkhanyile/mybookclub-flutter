@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_book_club/models/userModel.dart';
-import 'package:my_book_club/screens/group/createGroup/createGroup.dart';
-import 'package:my_book_club/screens/group/joinGroup/joinGroup.dart';
-import 'package:my_book_club/screens/root/root.dart';
-import 'package:my_book_club/services/auth.dart';
+import 'package:we_book_club/models/userModel.dart';
+import 'package:we_book_club/screens/group/createGroup/createGroup.dart';
+import 'package:we_book_club/screens/group/joinGroup/joinGroup.dart';
+import 'package:we_book_club/screens/root/root.dart';
+import 'package:we_book_club/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class NoGroupScreen extends StatelessWidget {
@@ -46,18 +46,32 @@ class NoGroupScreen extends StatelessWidget {
 
     return Scaffold(
       body: Column(children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-              child: IconButton(
-                onPressed: () => _signOut(context),
-                icon: Icon(Icons.exit_to_app),
-                color: Theme.of(context).secondaryHeaderColor,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                "Hello! " +
+                    ((_currentUser != null)
+                        ? _currentUser!.fullName!
+                        : "anonymous"),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                child: IconButton(
+                  onPressed: () => _signOut(context),
+                  icon: Icon(Icons.exit_to_app),
+                  color: Theme.of(context).secondaryHeaderColor,
+                ),
+              ),
+            ],
+          ),
         ),
         Spacer(
           flex: 1,
@@ -65,17 +79,31 @@ class NoGroupScreen extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(80.0),
           child: Image.asset(
-            "assets/Jotta-logo.png",
+            "assets/we-book-club-logo.png",
             width: 150,
             height: 150,
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Text(
-            "WELCOME TO MY BOOK CLUB",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      style: Theme.of(context).textTheme.headline5,
+                      children: [
+                        TextSpan(text: "Welcome to \n\n"),
+                        TextSpan(
+                          text: "We Book Club",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 35,
+                          ),
+                        ),
+                      ]))
+            ],
           ),
         ),
         Padding(

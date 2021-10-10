@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_book_club/screens/root/root.dart';
-import 'package:my_book_club/screens/signUp/signUp.dart';
-import 'package:my_book_club/services/auth.dart';
-import 'package:my_book_club/utils/ourTheme.dart';
-// import 'package:my_book_club/screens/signup/signup.dart';
-// import 'package:my_book_club/states/currentUser.dart';
+import 'package:we_book_club/screens/root/root.dart';
+import 'package:we_book_club/screens/signUp/signUp.dart';
+import 'package:we_book_club/services/auth.dart';
+import 'package:we_book_club/utils/ourTheme.dart';
+// import 'package:we_book_club/screens/signup/signup.dart';
+// import 'package:we_book_club/states/currentUser.dart';
 
 enum LoginType { email, google }
 
@@ -91,12 +91,13 @@ class _LoginFormState extends State<LoginForm> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+            mainAxisAlignment: MainAxisAlignment.center,
+             children: [
               Text(
                 "Log in",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Colors.grey.withOpacity(0.5),
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                 ),
