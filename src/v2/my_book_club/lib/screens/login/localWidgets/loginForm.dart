@@ -92,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
+            children: [
               Text(
                 "Log in",
                 textAlign: TextAlign.center,
@@ -107,6 +107,8 @@ class _LoginFormState extends State<LoginForm> {
         ),
         TextFormField(
           controller: _emailController,
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.alternate_email),
             hintText: "Email",
@@ -115,11 +117,13 @@ class _LoginFormState extends State<LoginForm> {
         _sizedBox,
         TextFormField(
           controller: _passwordController,
+          textInputAction: TextInputAction.next,
+          keyboardType: TextInputType.text,
+          obscureText: true,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.lock_outline),
             hintText: "Password",
           ),
-          obscureText: true,
         ),
         _sizedBox,
         SizedBox(
@@ -146,7 +150,21 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ),
         FlatButton(
-          child: Text("Don't have an account? Sign up here"),
+          // child: Text("Don't have an account? Sign up here"),
+         child: RichText(
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyText1,
+              children: [
+                TextSpan(text: "Don't have an account? "),
+                TextSpan(
+                  text: "Sign up",
+                  style: TextStyle(
+                    color: HexColor("#71A748"),
+                  ),
+                ),
+              ],
+            ),
+          ), 
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -155,10 +173,11 @@ class _LoginFormState extends State<LoginForm> {
             );
           },
         ),
-        SizedBox(
-          width: double.infinity,
-          child: _googleButton(),
-        ),
+        // TODO Investigate this google sign up button on deployed code.
+        // SizedBox(
+        //   width: double.infinity,
+        //   child: _googleButton(),
+        // ),
       ]),
     );
   }

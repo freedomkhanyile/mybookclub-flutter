@@ -7,6 +7,7 @@ import 'package:we_book_club/models/userModel.dart';
 import 'package:we_book_club/screens/group/inGroup/inGroupScreen.dart';
 import 'package:we_book_club/screens/group/notInGroup/noGroup.dart';
 import 'package:we_book_club/screens/login/login.dart';
+import 'package:we_book_club/screens/splashScreen/loadingScreen.dart';
 import 'package:we_book_club/screens/splashScreen/splashScreen.dart';
 import 'package:we_book_club/services/dbStream.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +46,7 @@ class _OurRootState extends State<OurRoot> {
   // everytime something changes in the dependencies of this screen this method
   @override
   void didChangeDependencies() async {
-    // is triggered.
+    // is triggered. 
     super.didChangeDependencies();
 
     // get the state, check current user, set the authStatus based on the state
@@ -72,11 +73,10 @@ class _OurRootState extends State<OurRoot> {
     );
     switch (_authStatus) {
       case AuthState.unknown:
-        // retWidgetVal = OurSplashScreen();
-        retWidgetVal = SplashScreen();
+        retWidgetVal = LoadingScreen();
         break;
       case AuthState.notLoggedIn:
-        retWidgetVal = Login();
+        retWidgetVal = SplashScreen();
         break;
       case AuthState.loggedIn:
         retWidgetVal = StreamProvider<UserModel>.value(
@@ -110,7 +110,7 @@ class LoggedIn extends StatelessWidget {
         retWidgetVal = NoGroupScreen();
       }
     } else {
-      retWidgetVal = SplashScreen();
+      retWidgetVal = LoadingScreen();
     }
 
     return retWidgetVal;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:we_book_club/screens/login/login.dart';
 import 'package:we_book_club/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:we_book_club/utils/ourTheme.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -41,12 +42,13 @@ class _SignUpFormState extends State<SignUpForm> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "Sign up",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Colors.grey.withOpacity(0.5),
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -116,7 +118,20 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
         ),
         FlatButton(
-          child: Text("Don't have an account? Log in"),
+          child: RichText(
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyText1,
+              children: [
+                TextSpan(text: "Already a member? "),
+                TextSpan(
+                  text: "Sign in",
+                  style: TextStyle(
+                    color: HexColor("#71A748"),
+                  ),
+                ),
+              ],
+            ),
+          ),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(

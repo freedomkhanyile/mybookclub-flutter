@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:we_book_club/models/groupModel.dart';
 import 'package:we_book_club/services/bookService.dart';
 import 'package:we_book_club/states/groupState.dart';
+import 'package:we_book_club/utils/ourTheme.dart';
 import 'package:we_book_club/widgets/shadowContainer.dart';
 
 class AddReviewScreen extends StatefulWidget {
@@ -42,7 +43,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               children: <Widget>[BackButton()],
             ),
           ),
-          Spacer(),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: ShadowContainer(
@@ -82,6 +82,18 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                     maxLines: 5,
                     decoration: InputDecoration(
                       hintText: "Add a review",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: HexColor("#94989B"),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: HexColor("#71A748"),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -110,7 +122,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               ),
             ),
           ),
-          Spacer(),
         ],
       ),
     );
