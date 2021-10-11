@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class OurTheme {
-  Color _cloud = HexColor("#FFFFFF");
+  Color _cloud = HexColor("#FAFAFA");
   Color _grey = HexColor("#94989B");
   Color _black = HexColor("#000000");
 

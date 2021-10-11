@@ -117,7 +117,7 @@ class _LoginFormState extends State<LoginForm> {
         _sizedBox,
         TextFormField(
           controller: _passwordController,
-          textInputAction: TextInputAction.next,
+          // textInputAction: TextInputAction.next, // Last form field must release NEXT action.
           keyboardType: TextInputType.text,
           obscureText: true,
           decoration: InputDecoration(

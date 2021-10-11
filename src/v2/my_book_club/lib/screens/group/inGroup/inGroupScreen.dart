@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:we_book_club/models/groupModel.dart';
 import 'package:we_book_club/models/userModel.dart';
@@ -14,6 +16,8 @@ import 'package:we_book_club/screens/reviews/addReview/addReveiw.dart';
 import 'package:we_book_club/screens/root/root.dart';
 import 'package:we_book_club/services/auth.dart';
 import 'package:we_book_club/services/groupService.dart';
+import 'package:we_book_club/utils/ourTheme.dart';
+import 'package:we_book_club/widgets/book_card_widget.dart';
 
 import 'package:we_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
@@ -72,8 +76,9 @@ class _InGroupScreenState extends State<InGroupScreen> {
   void _copyGroupId(BuildContext context) {
     GroupModel group = Provider.of<GroupModel>(context, listen: false);
     Clipboard.setData(ClipboardData(text: group.id));
-    key.currentState!.showSnackBar(SnackBar(
-      content: Text("Copied!"),
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Group ID Copied!"),
+      backgroundColor: HexColor("#71A748"),
     ));
   }
 
@@ -91,84 +96,146 @@ class _InGroupScreenState extends State<InGroupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      key: key,
-      appBar: AppBar(
-        title: Text(
-          "Hello! " +
-              ((_currentUser != null) ? _currentUser!.fullName! : "anonymous"),
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0, // gets rid of the shadow drop.
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-            child: IconButton(
-              onPressed: () => _signOut(context),
-              icon: Icon(Icons.exit_to_app),
-              color: Theme.of(context).secondaryHeaderColor,
-            ),
-          ),
-        ],
-      ),
-      body: ListView(
-        children: <Widget>[
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: <Widget>[
-          //     Padding(
-          //       padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          //       child: IconButton(
-          //         onPressed: () => _signOut(context),
-          //         icon: Icon(Icons.exit_to_app),
-          //         color: Theme.of(context).secondaryHeaderColor,
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TopCard(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: BottomCard(),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: RaisedButton(
-              child: Text(
-                "Book Club History",
-                style: TextStyle(color: Colors.white),
+      body: SingleChildScrollView(
+        key: key,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    "assets/images/main_page_bg.png",
+                  ),
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
-              onPressed: () => _goToBookHistory(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: size.height * .1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                      color: Colors.grey.withOpacity(0.75)),
+                              children: [
+                                TextSpan(text: "Welcome! \n"),
+                                TextSpan(
+                                  text: (_currentUser != null)
+                                      ? _currentUser!.fullName
+                                      : "anonymous",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                        IconButton(
+                          onPressed: () => _signOut(context),
+                          icon: Icon(Icons.exit_to_app),
+                          color: Theme.of(context).secondaryHeaderColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: RichText(
+                      text: TextSpan(
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: Colors.black),
+                        children: [
+                          TextSpan(text: "Ready for \ntoday's "),
+                          TextSpan(
+                            text: "reading?",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BookCardWidget(size: size),
+                          SizedBox(height: 20),
+                          // Action buttons.
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.headline6,
+                              children: [
+                                TextSpan(
+                                    text: "Quick ",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w300)),
+                                TextSpan(
+                                  text: "Actions",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              child: Text(
+                                "Book Club History",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () => _goToBookHistory(),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              child: Text("Copy Group Id"),
+                              onPressed: () => _copyGroupId(context),
+                              color: Theme.of(context).canvasColor,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: FlatButton(
+                              child: Text("Leave Group"),
+                              onPressed: () => _leaveGroup(context),
+                              color: Theme.of(context).canvasColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: RaisedButton(
-              child: Text("Copy Group Id"),
-              onPressed: () => _copyGroupId(context),
-              color: Theme.of(context).canvasColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
-            child: FlatButton(
-              child: Text("Leave Group"),
-              onPressed: () => _leaveGroup(context),
-              color: Theme.of(context).canvasColor,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

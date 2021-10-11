@@ -53,8 +53,8 @@ class NoGroupScreen extends StatelessWidget {
             children: <Widget>[
               Text(
                 "Hello! " +
-                    ((_currentUser != null)
-                        ? _currentUser!.fullName!
+                    ((_currentUser.fullName != null)
+                        ? _currentUser.fullName!
                         : "anonymous"),
                 style: TextStyle(
                   fontSize: 16,
