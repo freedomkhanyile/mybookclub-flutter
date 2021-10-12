@@ -179,7 +179,7 @@ class _InGroupScreenState extends State<InGroupScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          BookCardWidget(size: size),
+                          TopCard(),
                           SizedBox(height: 20),
                           // Action buttons.
                           RichText(

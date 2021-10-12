@@ -10,6 +10,7 @@ import 'package:we_book_club/screens/book/addBook/addBook.dart';
 import 'package:we_book_club/screens/reviews/addReview/addReveiw.dart';
 import 'package:we_book_club/services/bookService.dart';
 import 'package:we_book_club/utils/timeLeft.dart';
+import 'package:we_book_club/widgets/book_card_widget.dart';
 import 'package:we_book_club/widgets/shadowContainer.dart';
 import 'package:provider/provider.dart';
 
@@ -75,6 +76,8 @@ class _TopCardState extends State<TopCard> {
     );
   }
 
+  void _doNothing() {}
+
   void _goToAddBook(BuildContext context) {
     UserModel _currentUser = Provider.of<UserModel>(context, listen: false);
     Navigator.push(
@@ -131,63 +134,17 @@ class _TopCardState extends State<TopCard> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    
     if (_currentBook.name == null) {
       return ShadowContainer(child: noNextBook());
     }
-    return ShadowContainer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            (_currentBook.name != null) ? _currentBook.name! : 'loading..',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            (_currentBook.author! != null) ? _currentBook.author! : 'loading..',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey[600],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "Due In:",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    _timeUntil,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: 40,
-            child: RaisedButton(
-              child: Text(
-                "Finished Book",
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: _doneWithBook ? null : _goToReview,
-            ),
-          )
-        ],
-      ),
+
+    return BookCardWidget(
+      book: _currentBook,
+      bookDue: _timeUntil,
+      press: _doneWithBook ? _doNothing : _goToReview,
+      size: size,
     );
   }
 }

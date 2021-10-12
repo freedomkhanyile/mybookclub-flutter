@@ -1,14 +1,20 @@
-
 import 'package:flutter/material.dart';
+import 'package:we_book_club/models/bookModel.dart';
 import 'package:we_book_club/utils/ourTheme.dart';
 
 class BookCardWidget extends StatelessWidget {
   const BookCardWidget({
     Key? key,
+    required this.book,
+    required this.bookDue,
+    required this.press,
     required this.size,
   }) : super(key: key);
 
   final Size size;
+  final String bookDue;
+  final GestureTapCallback press;
+  final BookModel book;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,7 @@ class BookCardWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "How To Win \nFriends &  Influence",
+                    (book.name != null) ? book.name! : 'loading..',
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 10),
@@ -62,15 +68,10 @@ class BookCardWidget extends StatelessWidget {
                           color: HexColor("#94989B"),
                         ),
                         children: [
-                          TextSpan(text: "Author \n"),
                           TextSpan(
-                            text: "Name of auther",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
+                              text: (book.author != null)
+                                  ? book.author!
+                                  : 'loading..'),
                         ]),
                   ),
                   SizedBox(height: 10),
@@ -82,7 +83,7 @@ class BookCardWidget extends StatelessWidget {
                         children: [
                           TextSpan(text: "Due in: \n"),
                           TextSpan(
-                            text: "30 days, 23 hour(s): 36 mins",
+                            text: bookDue,
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -97,6 +98,7 @@ class BookCardWidget extends StatelessWidget {
           Positioned(
             right: 0,
             top: 0,
+            // TODO Retrieve from FireStore Storage.
             child: Image.asset(
               "assets/images/book_cover_placeholder.png",
               width: size.width * .3,
@@ -109,7 +111,7 @@ class BookCardWidget extends StatelessWidget {
               height: 40,
               width: size.width * .3,
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: press,
                 // TODO Move colors to constants.dart file
                 color: HexColor("#71A748"),
                 shape: RoundedRectangleBorder(
